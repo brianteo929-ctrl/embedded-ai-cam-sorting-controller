@@ -1,4 +1,5 @@
 #include "motor.h"
+#include "esp_log.h"
 
 static const char *TAG = "MOTOR";
 
