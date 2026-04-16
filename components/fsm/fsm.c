@@ -29,7 +29,7 @@ void fsm_update(void) {
             motor_move_steps(200, 1);
             state = RESET;
             break;
-
+        // 
         case RESET:
             ESP_LOGI(TAG, "RESET");
             state = IDLE;
