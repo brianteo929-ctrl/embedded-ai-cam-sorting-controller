@@ -86,7 +86,7 @@ Hardware interrupts are used for:
 ## Build & Flash Process
 
 Firmware is built using the ESP-IDF toolchain:
-
+important** - make sure to run export.bat to turn ESP-IDF environment on for the terminal
 ```bash
 idf.py build
 idf.py flash
