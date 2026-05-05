@@ -1,0 +1,24 @@
+{
+  "name": "embedded-ai-cam-sorting-controller",
+  "version": "1.0.0",
+  "description": "ESP32-CAM to perform on-device waste classification and control multi-axis servo sorting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianteo929-ctrl/embedded-ai-cam-sorting-controller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brianteo929-ctrl/embedded-ai-cam-sorting-controller/issues"
+  },
+  "homepage": "https://github.com/brianteo929-ctrl/embedded-ai-cam-sorting-controller#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.1.1"
+  }
+}
