@@ -8,7 +8,7 @@
 - IDF code: three-state periodic loop, one busy-wait motor on GPIO12/13/14, enabled on boot. No trigger, camera, inference, calibration, timeout, or fault handling.
 - Arduino reference: OV3660-compatible AI-Thinker pin map, QVGA JPEG, AP `ESP32-CAM-MB`, MJPEG, and repetitive motor task. Not part of the IDF build.
 - No Edge Impulse export, weights, dataset, or metrics. Website claims exceed implementation.
-- Old `C:\Users\brian\esp-idf` is IDF 5.2 with missing tools. VS Code/build metadata select `C:\esp\v6.0.2\esp-idf` and its IDF 6.0 Python environment.
+- Old `C:\Users\brian\esp-idf` is IDF 5.2; its export reported unavailable tools inside the sandbox. VS Code/build metadata select `C:\esp\v6.0.2\esp-idf` and its IDF 6.0 Python environment. The old and current toolchains must not share generated build files.
 - Baseline: IDF 6.0.2 incremental build **PASS**, binary 144,800 bytes (`0x235a0`), 1 MiB app partition. Sandbox Windows DLL relocation error requires running outside this session's sandbox; installed tools work there. No reinstall/fullclean needed.
 - No serial ports enumerated. Physical camera, motors, wiring, power, inference, and mechanics cannot be verified here.
 
@@ -56,4 +56,4 @@ The 12 V / 1 A adapter is not qualified for two unknown NEMA17 motors; both draw
 
 ## Git delivery
 
-Current branch and remote retained as requested. Verified implementation and dependency-hygiene commits will be recorded by Git; never force-push. Original motor/config snapshots remain locally in `build/audit`. Generated dependencies and local configuration are not intended as source artifacts.
+Implementation commit: `7227143` (`implement safe sorter pipeline`). Branch `main` and configured origin are retained as requested. The dependency-hygiene follow-up removes 709 previously tracked `node_modules` files and the generated root sdkconfig from the index only; their local copies remain intact. Original motor/config snapshots remain locally in `build/audit`. The final handoff records commit IDs and push verification; no force-push or history rewrite is used.

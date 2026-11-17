@@ -6,7 +6,7 @@
 4. [x] Port camera/AP into IDF; serialize frame ownership; add vision worker and model interface.
 5. [x] Add bounded HTTP control/status and diagnostics.
 6. [x] Verify configurations; document wiring, model, bring-up, resources, learning.
-7. [ ] Commit verified milestones on existing main; final regression and normal push.
+7. [x] Prepare verified implementation and dependency-hygiene commits on existing main. Final regression and remote push results are recorded in the delivery report.
 
 Constraints: no model export or serial device; unknown motor ratings/sense resistors/mechanical positions; 12 V / 1 A supply unqualified. Sequential open-loop movement, compiled simulation by default, no assumed home at boot. No new MCP services.
 
