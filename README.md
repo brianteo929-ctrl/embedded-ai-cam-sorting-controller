@@ -1,93 +1,77 @@
-# embedded-ai-cam-sorting-controller
-ESP32-CAM to perform on-device waste classification and control multi-axis servo sorting 
+# Autonomous Waste Sorter
 
----
+ESP32-CAM controller for a manually triggered, two-axis waste-sorting plate. Native ESP-IDF 6.0.2 + FreeRTOS; camera/JPEG preview, conservative three-category decisions, explicit state machine, and asynchronous RMT step generation.
 
-## Key Features
+**Current status:** firmware builds and host tests run locally. Default inference and motors are simulated. No trained Edge Impulse export is present; no board was connected for flashing or physical validation. This is an open-loop prototype, not an unattended or hazardous-waste handling system. The [portfolio concept](https://www.brianteo.dev/) describes the intended product; this repository's status and evidence are authoritative.
 
-- On-device AI inference using Edge Impulse (FOMO model)
-- Deterministic finite state machine (FSM) for system control
-- FreeRTOS-based concurrent task execution
-- Interrupt-driven event handling for real-time responsiveness
-- Non-blocking stepper motor control using DRV8825 drivers
-- UART-based logging for debugging and system visibility
-- Modular ESP-IDF architecture with component-based design
+## Build on this Windows machine
 
----
+From Command Prompt in this repository:
 
-## Tech Stack
+```bat
+tools\idf.cmd build
+python tools\test.py
+tools\idf.cmd menuconfig
+tools\idf.cmd size
+```
 
-### AI / Computer Vision
-- Edge Impulse (FOMO object detection model)
-- Roboflow (dataset collection and labeling)
+The helper activates **`C:\esp\v6.0.2\esp-idf\export.bat`**, including the IDF Python virtual environment. No separate `venv` activation is needed. Set `SORTER_IDF_PATH` to another **6.0.2** installation if necessary. The older `C:\Users\brian\esp-idf` installation is 5.2 and does not match the current configuration/tools. In PowerShell use `.\tools\idf.cmd build`.
 
----
+The helper keeps the user's root `sdkconfig` intact and uses `build/sdkconfig.sorter`, `sdkconfig.defaults`, and the isolated incremental output folder `build/sorter`. First configuration downloads pinned official camera dependencies; subsequent builds are incremental. Do not routinely delete build folders or run fullclean. This Codex sandbox required out-of-sandbox toolchain execution because Windows returned DLL relocation errors; that was not a missing-tool installation.
 
-### Embedded Software
-- ESP-IDF (Espressif IoT Development Framework)
-- FreeRTOS (task scheduling and concurrency)
-- C / C++ (embedded systems programming)
-- Xtensa toolchain (cross-compilation)
+Equivalent manual setup:
 
----
+```bat
+call C:\esp\v6.0.2\esp-idf\export.bat
+cd /d C:\Users\brian\Documents\embedded-ai-cam-sorting-controller
+idf.py -B build/sorter -D SDKCONFIG=build/sdkconfig.sorter build
+```
 
-### Development Environment
-- VS Code
-- Linux CLI
+With an identified board and validated power/wiring:
 
----
+```bat
+tools\idf.cmd -p COMx flash monitor
+```
 
-### Hardware
-- ESP32-CAM (AI-Thinker, ESP32-S + OV2640)
-- DRV8825 Stepper Motor Drivers
-- NEMA 17 Stepper Motors
-- Buck Converter (power regulation)
-- UART interface for flashing and debugging
+Replace COMx with the actual port. Do not flash the obsolete root build output. Defaults assume 4 MB flash and working PSRAM; verify those against the board first.
 
----
+## Operation
 
-## Embedded System Design: Finite State Machine (FSM)
-The system is controlled using a deterministic FSM to manage transitions between sensing, inference, decision-making, and actuation.
+1. Read [wiring](docs/WIRING.md) and [bring-up](docs/BRING_UP.md). Keep VMOT disconnected for initial camera/UI checks.
+2. Read UART at 115200 baud. Join `ESP32-CAM-MB` with its newly generated password, printed at each boot. Open `http://192.168.4.1/`.
+3. The initial state is UNHOMED. Arm, then Confirm zero only when both physical axes are at their reference marks (simulation requires the same workflow).
+4. Select a deterministic mock scenario and Capture and sort. Single accepted objects follow move → open-loop settle → estimated return to zero. Ambiguous results do not move.
+5. Stop disables torque and invalidates position. Clear fault returns to UNHOMED; arm and reference again. No sensor-driven homing is implemented.
 
-### Development Environment
-- VS Code
-- Linux CLI
+The page displays the inference, motor and camera modes. Physical motion requires `SORTER_MOTOR_HARDWARE` and `SORTER_MOTION_CALIBRATED`; mock-driven physical bench tests additionally require `SORTER_ALLOW_MOCK_MOTION`. None is enabled by default. Example bin positions are not a validated mechanism design.
 
----
+| Endpoint | Purpose |
+|---|---|
+| `GET /` | Controls and status |
+| `GET /api/status` | JSON state, mode, fault, decision, estimated position, heap/stack/timing |
+| `POST /api/command` | Plain command: arm, home, trigger, stop, recover; requires page token |
+| `GET /capture` | Independent JPEG snapshot |
+| `GET /stream` | Redirect to separate MJPEG server at port 81 |
 
-### Hardware
-- ESP32-CAM (AI-Thinker, ESP32-S + OV2640)
-- DRV8825 Stepper Motor Drivers
-- NEMA 17 Stepper Motors
-- Buck Converter (power regulation)
-- UART interface for flashing and debugging
+Mock trigger suffixes: `trigger-recyclable`, `trigger-organic`, `trigger-hazardous`, `trigger-empty`, `trigger-low`, `trigger-unknown`, `trigger-multiple`, `trigger-conflict`, `trigger-error`. A 202 response means queued: inspect status for the actual result. The software Stop is not a hardware emergency stop.
 
----
+## Verification and layout
 
-### FreeRTOS Task Architecture
-The system is divided into independent tasks for scalability and responsiveness:
+```bat
+python tools\test.py
+python tools\test.py motor camera
+tools\verify-hardware.cmd
+```
 
-- Vision Task → image capture and AI inference
-- Control Task → FSM state management
-- Motor Task → stepper motor control
+Native tests compile the actual C/C++ modules with GCC/G++ (or CC/CXX overrides). They cover classification, FSM/deadlines/rollover/recovery, motion planning, hardware-driver contracts through fake RMT, simulated motion, all mock scenarios, camera ownership/failure paths and the EI adapter contract through a **fake SDK**. These are not physical tests or validation of a real trained model. The alternate IDF build compiles real RMT plus a synthetic camera, with physical arming gates still closed; it does not flash anything.
 
-Inter-task communication is handled using queues and event groups.
+| Directory | Role |
+|---|---|
+| `main/` | Control/vision tasks, HTTP/AP, Kconfig |
+| `components/fsm/` | Portable FSM, classification, motion planning, preprocessing |
+| `components/motor/` | Sequential non-blocking RMT or simulated driver |
+| `components/vision/` | Camera ownership, mock inference, external EI adapter |
+| `tests/`, `tools/` | Native regression and Windows IDF helpers |
+| `PlatformIOfolder/`, `server/` | Historical Arduino and Node references; not production dependencies |
 
----
-
-### Interrupt-Driven Design
-Hardware interrupts are used for:
-- Object detection triggers
-- Limit switch feedback (position calibration)
-- Timer-based scheduling
-
----
-
-## Build & Flash Process
-
-Firmware is built using the ESP-IDF toolchain:
-important** - make sure to run export.bat to turn ESP-IDF environment on for the terminal
-```bash
-idf.py build
-idf.py flash
-idf.py monitor
+See [current evidence and blockers](docs/PROJECT_STATUS.md), [architecture](docs/ARCHITECTURE.md), [model integration](docs/MODEL_INTEGRATION.md), and [learning strategy](docs/LEARNING_STRATEGY.md). Real FOMO performance, calibrated positions, supply capacity, camera operation, motor behavior and successful waste delivery remain to be measured on the bench.

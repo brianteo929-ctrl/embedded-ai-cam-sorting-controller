@@ -1,10 +1,11 @@
 {
   "name": "embedded-ai-cam-sorting-controller",
   "version": "1.0.0",
-  "description": "ESP32-CAM to perform on-device waste classification and control multi-axis servo sorting",
-  "main": "index.js",
+  "description": "ESP32-CAM waste sorter firmware; optional historical image relay",
+  "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "python tools/test.py",
+    "start:legacy": "node server/server.js"
   },
   "repository": {
     "type": "git",

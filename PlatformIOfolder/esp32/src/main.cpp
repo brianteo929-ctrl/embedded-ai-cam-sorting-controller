@@ -6,7 +6,10 @@
 // ESP32 will act as a WiFi router
 // =====================
 const char* ssid = "ESP32-CAM-MB"; // Network name broadcast by ESP32
-const char* password = "BrianESP32"; // Password (must be ≥ 8 chars)
+#ifndef LEGACY_AP_PASSWORD
+#error "Historical prototype: supply LEGACY_AP_PASSWORD locally; use the IDF firmware for the sorter."
+#endif
+const char* password = LEGACY_AP_PASSWORD;
 
 // =====================
 // CAMERA PIN MAPPING (AI Thinker ESP32-CAM)

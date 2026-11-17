@@ -1,0 +1,109 @@
+menu "Waste sorter"
+    config SORTER_MOTOR_HARDWARE
+        bool "Enable physical motor output (read docs/WIRING.md first)"
+        default n
+        select RMT_TX_ISR_CACHE_SAFE
+    config SORTER_MOTION_CALIBRATED
+        bool "Wiring, supply, current limits and bin coordinates validated"
+        default n
+    config SORTER_ALLOW_MOCK_MOTION
+        bool "Allow explicitly armed bench motion with mock detections"
+        default n
+    config SORTER_CAMERA_MOCK
+        bool "Use synthetic camera (no camera hardware required)"
+        default n
+    choice SORTER_INFERENCE
+        prompt "Inference backend"
+        default SORTER_INFERENCE_MOCK
+        config SORTER_INFERENCE_MOCK
+            bool "Deterministic mock (not AI)"
+        config SORTER_INFERENCE_EI
+            bool "External Edge Impulse component"
+    endchoice
+    config SORTER_CONFIDENCE_PERCENT
+        int "Minimum confidence percent"
+        range 1 100
+        default 80
+    config SORTER_LABEL_RECYCLABLE
+        string "Exact recyclable model label"
+        default "recyclable"
+    config SORTER_LABEL_ORGANIC
+        string "Exact organic model label"
+        default "organic"
+    config SORTER_LABEL_HAZARDOUS
+        string "Exact hazardous model label"
+        default "hazardous"
+    config SORTER_STEP_1
+        int "Motor 1 STEP (2 or 14)"
+        default 14
+    config SORTER_DIR_1
+        int "Motor 1 DIR (12 or 13)"
+        default 13
+    config SORTER_STEP_2
+        int "Motor 2 STEP (2 or 14)"
+        default 2
+    config SORTER_DIR_2
+        int "Motor 2 DIR (12 or 13)"
+        default 12
+    config SORTER_ENABLE
+        int "Shared active-low ENABLE (audited GPIO15 only)"
+        default 15
+    config SORTER_INVERT_1
+        int "Invert motor 1 direction (0/1)"
+        range 0 1
+        default 0
+    config SORTER_INVERT_2
+        int "Invert motor 2 direction (0/1)"
+        range 0 1
+        default 0
+    config SORTER_POSITION_LIMIT
+        int "Maximum absolute axis position in pulses"
+        range 1 1024
+        default 200
+    config SORTER_START_PERIOD_US
+        int "Start/end pulse period us"
+        range 500 20000
+        default 10000
+    config SORTER_CRUISE_PERIOD_US
+        int "Cruise pulse period us"
+        range 500 20000
+        default 4000
+    config SORTER_RAMP_STEPS
+        int "Period ramp length in pulses (0 disables ramp)"
+        range 0 2048
+        default 20
+    config SORTER_RECYCLABLE_1
+        int "Recyclable axis 1 pulses (example, calibrate)"
+        default 80
+    config SORTER_RECYCLABLE_2
+        int "Recyclable axis 2 pulses (example, calibrate)"
+        default 40
+    config SORTER_ORGANIC_1
+        int "Organic axis 1 pulses (example, calibrate)"
+        default -80
+    config SORTER_ORGANIC_2
+        int "Organic axis 2 pulses (example, calibrate)"
+        default 40
+    config SORTER_HAZARDOUS_1
+        int "Hazardous axis 1 pulses (example, calibrate)"
+        default 0
+    config SORTER_HAZARDOUS_2
+        int "Hazardous axis 2 pulses (example, calibrate)"
+        default -40
+    config SORTER_CAPTURE_TIMEOUT_MS
+        int "Capture deadline ms"
+        range 1000 15000
+        default 10000
+    config SORTER_INFERENCE_TIMEOUT_MS
+        int "Inference deadline ms"
+        range 1000 120000
+        default 30000
+    config SORTER_MOTION_TIMEOUT_MS
+        int "Whole two-axis move deadline ms"
+        range 1000 120000
+        default 15000
+    config SORTER_SETTLE_MS
+        int "Open-loop settling time ms"
+        range 100 10000
+        default 500
+endmenu
