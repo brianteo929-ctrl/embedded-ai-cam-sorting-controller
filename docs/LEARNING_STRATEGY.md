@@ -1,6 +1,6 @@
 # Learning strategy
 
-Use supervised FOMO detection with deterministic control for this fixed three-bin sorter. Model uncertainty must not change safety limits or the motion sequence.
+Use supervised image classification as the next baseline for the one-centered-item mechanism; retain FOMO when counting/location becomes necessary. See MODEL_SELECTION.md for the current decision and its unmeasured trade-offs. Model uncertainty must not change safety limits or the motion sequence.
 
 Collect low-confidence, rejected and misclassified scenes during supervised bench use through `/capture`; obtain consent for any incidental personal imagery and retain only what is needed. Save the true label, lighting, camera geometry, model version and reason code alongside the image. The firmware does not automatically upload or retain images.
 

@@ -10,7 +10,7 @@ From Command Prompt in this repository:
 
 ```bat
 tools\idf.cmd build
-python tools\test.py
+npm test
 tools\idf.cmd menuconfig
 tools\idf.cmd size
 ```
@@ -43,7 +43,7 @@ Replace COMx with the actual port. Do not flash the obsolete root build output. 
 4. Select a deterministic mock scenario and Capture and sort. Single accepted objects follow move → open-loop settle → estimated return to zero. Ambiguous results do not move.
 5. Stop disables torque and invalidates position. Clear fault returns to UNHOMED; arm and reference again. No sensor-driven homing is implemented.
 
-The page displays the inference, motor and camera modes. Physical motion requires `SORTER_MOTOR_HARDWARE` and `SORTER_MOTION_CALIBRATED`; mock-driven physical bench tests additionally require `SORTER_ALLOW_MOCK_MOTION`. None is enabled by default. Example bin positions are not a validated mechanism design.
+The page displays the inference, motor and camera modes. Physical motion requires `SORTER_MOTOR_HARDWARE` and `SORTER_MOTION_CALIBRATED`; mock-driven physical bench tests additionally require `SORTER_ALLOW_MOCK_MOTION`, and real-model control requires `SORTER_MODEL_VALIDATED`. None is enabled by default. Example bin positions are not a validated mechanism design.
 
 | Endpoint | Purpose |
 |---|---|
@@ -74,4 +74,6 @@ Native tests compile the actual C/C++ modules with GCC/G++ (or CC/CXX overrides)
 | `tests/`, `tools/` | Native regression and Windows IDF helpers |
 | `PlatformIOfolder/`, `server/` | Historical Arduino and Node references; not production dependencies |
 
-See [current evidence and blockers](docs/PROJECT_STATUS.md), [architecture](docs/ARCHITECTURE.md), [model integration](docs/MODEL_INTEGRATION.md), and [learning strategy](docs/LEARNING_STRATEGY.md). Real FOMO performance, calibrated positions, supply capacity, camera operation, motor behavior and successful waste delivery remain to be measured on the bench.
+Image classification is the selected next baseline for one centered item; FOMO remains a separate supported adapter. Neither has installed trained weights. Real label routing is centralized in `components/fsm/waste_labels.def`; reject classes and ambiguous probabilities never default to a bin. Thresholds remain provisional and real-model physical motion is gated off.
+
+See [current evidence and blockers](docs/PROJECT_STATUS.md), [AI model/export workflow](docs/AI_MODEL.md), [bounded dataset selection](docs/DATASET_SELECTION.md), [dataset audit tools](docs/DATASET_AUDIT.md), and [architecture](docs/ARCHITECTURE.md). Real inference performance, calibrated positions, supply capacity, camera operation, motor behavior and successful waste delivery remain to be measured on the bench.

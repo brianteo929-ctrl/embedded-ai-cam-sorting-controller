@@ -5,6 +5,7 @@
 static ei_impulse_result_bounding_box_t boxes[17];
 static size_t count;
 static bool fail;
+const char *ei_classifier_inferencing_categories[] = {"plastic_bottle", "background", "unknown", "multiple_items"};
 EI_IMPULSE_ERROR run_classifier(ei::signal_t *signal, ei_impulse_result_t *result, bool debug)
 {
     assert(!debug && signal->total_length == 4);

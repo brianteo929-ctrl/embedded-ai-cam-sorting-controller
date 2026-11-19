@@ -18,20 +18,30 @@ menu "Waste sorter"
         config SORTER_INFERENCE_MOCK
             bool "Deterministic mock (not AI)"
         config SORTER_INFERENCE_EI
-            bool "External Edge Impulse component"
+            bool "External Edge Impulse FOMO component"
+        config SORTER_INFERENCE_EI_CLASSIFICATION
+            bool "External Edge Impulse image classification component"
     endchoice
+    config SORTER_MODEL_VALIDATED
+        bool "Real model, rejection thresholds and camera-domain behavior validated"
+        default n
+        depends on !SORTER_INFERENCE_MOCK
+    config SORTER_CLASSIFICATION_MARGIN_PERCENT
+        int "Minimum top-two classification margin percent (provisional until validated)"
+        range 1 100
+        default 10
     config SORTER_CONFIDENCE_PERCENT
         int "Minimum confidence percent"
         range 1 100
         default 80
     config SORTER_LABEL_RECYCLABLE
-        string "Exact recyclable model label"
+        string "Exact recyclable simulation label"
         default "recyclable"
     config SORTER_LABEL_ORGANIC
-        string "Exact organic model label"
+        string "Exact organic simulation label"
         default "organic"
     config SORTER_LABEL_HAZARDOUS
-        string "Exact hazardous model label"
+        string "Exact hazardous simulation label"
         default "hazardous"
     config SORTER_STEP_1
         int "Motor 1 STEP (2 or 14)"

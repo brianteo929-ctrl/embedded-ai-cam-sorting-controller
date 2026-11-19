@@ -1,5 +1,58 @@
 # Project status
 
+## Model work checkpoint — 2026-11-19
+
+Baseline reestablished on clean `main` at `f9546c1`: all six native targets pass;
+`tools\idf.cmd build size` passes (890,992-byte binary, 645,008 bytes / 42% free,
+IRAM 93,635 bytes, static DRAM 51,059 bytes). Hardware configuration also builds
+(797,760 bytes); its only warnings concern temporary IDF activation cleanup.
+Root `sdkconfig` SHA-256: `c6ea3a17eefc9794ba4335b8ceebe572ba7f0559ab85196bc65626b69760692f`.
+
+Private project 1168582 has not been read or changed. After the user reported
+restoring access, the browser still denied `studio.edgeimpulse.com` because of
+a saved permission / managed policy. Roboflow browser access was also denied.
+Public research is complete within the five-dataset/three-model limit. See
+DATASET_SELECTION.md and MODEL_SELECTION.md. Two CC-BY-4.0 datasets are queued
+for audit; none is approved for training. Battery v12 has no held-out test split.
+No dataset, trained model, experiment, metric, or hardware result is inferred.
+
+Local implementation checkpoint: separate classification adapter; preserved and
+strengthened FOMO metadata checks; central fine-grained/reject taxonomy; whole-
+vector probability/margin rejection; physical model-validation gate off by default;
+request-specific stale-result handling; metadata/missing-artifact tests; offline
+COCO auditing/preparation and export checksum tools. Tests use synthetic fixtures
+and fake SDKs, not trained weights. Dataset acquisition, Studio import/training,
+real SDK component wiring, vector testing and on-device validation remain blocked.
+
+Latest local milestone: `npm test` passes nine native targets, metadata negative
+compile checks, absent-artifact CMake checks and three artifact-tool tests.
+Four dataset-tool tests pass separately with Pillow 13.0.0. These tests are offline.
+`tools\idf.cmd build size size-components` passes: **892,080 bytes**, an increase
+of 1,088 bytes from this turn's baseline; **643,920 bytes (42%) remain**. Linked
+image is 891,966 bytes; IRAM 93,635 and static DRAM 51,059 bytes are unchanged.
+No weights are installed, so this is adapter infrastructure overhead, not a model
+integration size. Preprocessing PSRAM allocations are 258,048 bytes at 96×96;
+model arena, peak inference RAM and latency are unmeasured (AI_MODEL.md).
+Root sdkconfig hash remains unchanged. No partition changes or physical tests.
+The hardware/synthetic-camera regression also passes: **798,880 bytes** (`0xc30a0`),
+737,120 bytes / 48% partition space free; physical arming gates remain closed.
+
+Component-size analysis (bytes, default build, no generated model):
+
+| Archive | Total | Static DRAM | Flash code | Flash data |
+|---|---:|---:|---:|---:|
+| main | 6,982 | 247 | 4,339 | 2,396 |
+| vision | 4,072 | 3,105 | 935 | 32 |
+| fsm | 2,737 | 0 | 2,513 | 224 |
+| motor | 514 | 76 | 438 | 0 |
+
+Full component output is retained in ignored `build/model-components.csv`.
+Locally retained ignored artifacts: `.venv/` (Pillow tooling), native test
+executables, IDF build outputs/logs/resource CSVs and prior audit backups under
+`build/`, existing `node_modules/`, and original root `sdkconfig`. No dataset or
+trained-model download was retained. Staged diff/credential/large-artifact checks
+pass. The model work is a preparation milestone, not completed trained inference.
+
 ## Audit baseline — 2026-11-17
 
 - Branch `main`, origin `https://github.com/brianteo929-ctrl/embedded-ai-cam-sorting-controller.git`, HEAD `db53f80`.
@@ -22,7 +75,7 @@
 - External Edge Impulse interface/adapter and integration instructions; actual SDK/model unavailable. Adapter contract tested with a fake SDK only.
 - GPIO/wiring, current-limit formulas, power qualification, mechanical bring-up, model workflow and learning strategy documented. Arduino/Node retained and marked historical.
 
-## Verification evidence
+## Previous milestone verification — 2026-11-17
 
 | Check | Result |
 |---|---|
@@ -47,7 +100,7 @@ Build repairs were evidence-based: selected the configured IDF 6.0.2 environment
 | Area | Exact missing evidence / work |
 |---|---|
 | Software integration | Default and hardware-profile builds work locally. Actual exported EI SDK compatibility with IDF 6.0.2 cannot be checked until supplied; no firmware boot/network timing claims |
-| Model/data | Trained FOMO C++ export, exact labels/input/preprocessing agreement, version/checksum, dataset provenance, held-out metrics, tensor-arena/latency/RAM measurements |
+| Model/data | Browser permissions for Roboflow and existing EI project 1168582; audited licensed images; trained classification (preferred baseline) or FOMO C++ export; exact input/labels/version/checksum, held-out metrics and ESP32 profile |
 | Hardware | No serial device; board condition after possible buck damage, sensor/flash/PSRAM identity, driver IC/Rs, motor phase ratings, VREF, boot-pin levels, cooling, and supply capacity unverified |
 | Sensors | No validated object/home/limit sensors. Manual trigger/reference only; VERIFY is a timed settle, not feedback |
 | Mechanical | Plate layout, gearing, microstep settings, reference marks, safe bin coordinates/path, release mechanism, load/holding behavior, repeatability and guarding |

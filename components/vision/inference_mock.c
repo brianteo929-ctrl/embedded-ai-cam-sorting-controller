@@ -1,6 +1,8 @@
 #include "inference.h"
 #include "sdkconfig.h"
 #if CONFIG_SORTER_INFERENCE_MOCK
+esp_err_t inference_validate(void) { return ESP_OK; }
+const char *inference_model_version(void) { return "simulation-no-model"; }
 void inference_dimensions(unsigned *width, unsigned *height) { *width = 96; *height = 96; }
 const char *inference_backend(void) { return "mock"; }
 esp_err_t inference_run(const uint8_t *rgb, unsigned width, unsigned height, mock_case_t scenario, inference_result_t *out)

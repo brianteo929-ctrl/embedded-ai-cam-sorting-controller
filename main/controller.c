@@ -2,6 +2,7 @@
 #include "camera_service.h"
 #include "image.h"
 #include "motor.h"
+#include "vision_guard.h"
 #include "sdkconfig.h"
 #include "esp_heap_caps.h"
 #include "esp_log.h"
@@ -24,6 +25,7 @@ static SemaphoreHandle_t status_lock;
 static TaskHandle_t control_handle, vision_handle;
 static control_status_t status, published;
 static bool motor_ready;
+static uint32_t outstanding_vision_cycle;
 static const char *TAG = "SORTER";
 static uint32_t now_ms(void) { return (uint32_t)(esp_timer_get_time() / 1000); }
 static const motion_config_t motion = {
@@ -37,11 +39,6 @@ static const int32_t destinations[4][2] = {
     {0, 0}, {CONFIG_SORTER_RECYCLABLE_1, CONFIG_SORTER_RECYCLABLE_2},
     {CONFIG_SORTER_ORGANIC_1, CONFIG_SORTER_ORGANIC_2}, {CONFIG_SORTER_HAZARDOUS_1, CONFIG_SORTER_HAZARDOUS_2},
 };
-static const label_map_t labels[] = {
-    {CONFIG_SORTER_LABEL_RECYCLABLE, BIN_RECYCLABLE}, {CONFIG_SORTER_LABEL_ORGANIC, BIN_ORGANIC},
-    {CONFIG_SORTER_LABEL_HAZARDOUS, BIN_HAZARDOUS},
-};
-
 static void vision_task(void *arg)
 {
     (void)arg;
@@ -80,8 +77,8 @@ static void vision_task(void *arg)
             inference_result_t result = {0};
             event.error = inference_run(input, width, height, request.scenario, &result);
             event.inference_ms = now_ms() - start;
-            event.decision = decide(result.items, result.count, event.error == ESP_OK, labels,
-                sizeof(labels) / sizeof(labels[0]), CONFIG_SORTER_CONFIDENCE_PERCENT / 100.0f);
+            event.decision = inference_decide(&result, event.error == ESP_OK,
+                CONFIG_SORTER_CONFIDENCE_PERCENT / 100.0f, CONFIG_SORTER_CLASSIFICATION_MARGIN_PERCENT / 100.0f);
         }
         event.captured = false;
         xQueueSend(vision_events, &event, portMAX_DELAY);
@@ -107,7 +104,10 @@ static void dispatch(sort_event_t event, mock_case_t scenario)
         vision_request_t request = {.cycle = ++status.cycle, .scenario = scenario};
         status.decision = (decision_t){.reason = DECISION_EMPTY};
         status.capture_ms = status.inference_ms = 0;
-        if (xQueueSend(vision_requests, &request, 0) == pdTRUE) status.vision_busy = true;
+        if (xQueueSend(vision_requests, &request, 0) == pdTRUE) {
+            outstanding_vision_cycle = request.cycle;
+            status.vision_busy = true;
+        }
         else err = ESP_ERR_INVALID_STATE;
     }
     if (action & (ACT_SORT | ACT_RETURN)) {
@@ -129,6 +129,9 @@ static bool can_arm(void)
     return false;
 #endif
 #if CONFIG_SORTER_INFERENCE_MOCK && !CONFIG_SORTER_ALLOW_MOCK_MOTION
+    return false;
+#endif
+#if !CONFIG_SORTER_INFERENCE_MOCK && !CONFIG_SORTER_MODEL_VALIDATED
     return false;
 #endif
 #endif
@@ -171,8 +174,8 @@ static void control_task(void *arg)
         dispatch(EV_TICK, MOCK_EMPTY);
         vision_event_t event;
         while (xQueueReceive(vision_events, &event, 0) == pdTRUE) {
-            if (!event.captured) status.vision_busy = false;
-            if (event.cycle != status.cycle) continue;
+            if (!vision_event_current(event.cycle, status.cycle, outstanding_vision_cycle,
+                                      !event.captured, &status.vision_busy)) continue;
             status.capture_ms = event.capture_ms;
             if (event.captured) dispatch(EV_CAPTURED, MOCK_EMPTY);
             else {
@@ -206,7 +209,14 @@ esp_err_t controller_init(void)
         if (!motion_plan(&motion, destinations[0], destinations[i], delta) ||
             motion_duration_ms(&motion, delta) + 200 >= config.motion_ms) return ESP_ERR_INVALID_ARG;
     }
-    if (decide(NULL, 0, true, labels, 3, CONFIG_SORTER_CONFIDENCE_PERCENT / 100.0f).reason != DECISION_EMPTY) return ESP_ERR_INVALID_ARG;
+    inference_result_t empty = {0};
+#if CONFIG_SORTER_INFERENCE_MOCK
+    empty.mocked = true;
+#endif
+    if (inference_validate() != ESP_OK || inference_decide(&empty, true,
+        CONFIG_SORTER_CONFIDENCE_PERCENT / 100.0f, CONFIG_SORTER_CLASSIFICATION_MARGIN_PERCENT / 100.0f).reason != DECISION_EMPTY)
+        return ESP_ERR_INVALID_ARG;
+    ESP_LOGI(TAG, "backend=%s model=%s", inference_backend(), inference_model_version());
     status.command_result = "none";
     motor_ready = motor_init(&motion) == ESP_OK;
     status.healthy = motor_ready;

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "status": "blocked_before_acquisition",
+  "ready_for_import": false,
+  "candidates_queued": ["garbage_v2", "battery_v12"],
+  "images_audited": 0,
+  "archive_checksums": null,
+  "per_class_counts": null,
+  "annotation_quality": null,
+  "duplicate_and_leakage_results": null,
+  "blocker": "Browser origin permission denied for universe.roboflow.com; authenticated download not attempted through an alternate route",
+  "known_metadata_issue": "battery_v12 publishes zero held-out test images",
+  "local_tool_validation": "synthetic offline fixtures only; not a dataset audit"
+}

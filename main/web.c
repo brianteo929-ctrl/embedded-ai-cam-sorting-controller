@@ -77,12 +77,12 @@ static esp_err_t get_status(httpd_req_t *req)
     char body[1024];
     int n = snprintf(body, sizeof(body),
         "{\"state\":\"%s\",\"fault\":\"%s\",\"armed\":%s,\"referenced\":%s,\"healthy\":%s,"
-        "\"inference\":\"%s\",\"motors\":\"%s\",\"camera\":\"%s\",\"camera_ready\":%s,"
+        "\"inference\":\"%s\",\"model_version\":\"%s\",\"motors\":\"%s\",\"camera\":\"%s\",\"camera_ready\":%s,"
         "\"cycle\":%lu,\"decision\":\"%s\",\"bin\":\"%s\",\"confidence\":%.3f,\"position_estimate\":[%ld,%ld],"
         "\"vision_busy\":%s,\"command_count\":%lu,\"command_result\":\"%s\",\"capture_ms\":%lu,\"inference_ms\":%lu,"
         "\"internal_free\":%u,\"internal_largest\":%u,\"psram_free\":%u,\"control_stack_free\":%lu,\"vision_stack_free\":%lu}",
         fsm_state_name(s.fsm.state), fsm_fault_name(s.fsm.fault), s.fsm.armed ? "true" : "false",
-        s.fsm.referenced ? "true" : "false", s.healthy ? "true" : "false", inference_backend(),
+        s.fsm.referenced ? "true" : "false", s.healthy ? "true" : "false", inference_backend(), inference_model_version(),
 #if CONFIG_SORTER_MOTOR_HARDWARE
         "hardware",
 #else

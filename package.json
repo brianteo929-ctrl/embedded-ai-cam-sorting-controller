@@ -4,7 +4,7 @@
   "description": "ESP32-CAM waste sorter firmware; optional historical image relay",
   "main": "server/server.js",
   "scripts": {
-    "test": "python tools/test.py",
+    "test": "python tools/test.py && python tools/test_metadata.py && python tests/test_model_tools.py",
     "start:legacy": "node server/server.js"
   },
   "repository": {

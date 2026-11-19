@@ -15,6 +15,29 @@ No serial device was available during this implementation. All steps below are *
 11. Add the actual exported model using MODEL_INTEGRATION.md. Test held-out images and live harmless objects with simulated motors. Record accuracy/confusion, false accepts, capture/preprocess/inference latency, free internal RAM/largest block/PSRAM and stack margins. Only enable model-controlled physical output after those checks.
 12. For unattended operation, add real home/limit/object sensors and electrical stop circuitry, then implement measured homing and verification. Until then, this is a manually triggered open-loop prototype requiring supervision and re-reference after every fault, slip, reset, or loss of torque.
 
+## Inference-only session after a verified export is installed
+
+1. Keep **VMOT disconnected**, `SORTER_MOTOR_HARDWARE=n` and
+   `SORTER_MODEL_VALIDATED=n`. Follow AI_MODEL.md to install/select the adapter.
+   `tools\idf.cmd build size` must pass before flashing.
+2. Identify the serial port; use `tools\idf.cmd -p COMx flash monitor`. Record the
+   logged backend/project/deployment version, PSRAM and camera status.
+3. Join the AP with the UART password; open `http://192.168.4.1/`. Confirm simulated
+   motors. Compare a color chart and crop grid from `/capture` with Studio's input.
+   Close the port-81 stream for repeatable capture/inference timing.
+4. Collect snapshots into ignored `captures/SESSION/` with object/session metadata.
+   Reserve whole objects/sessions for test. Include empty plate, unfamiliar harmless
+   objects, pairs, orientations and lighting changes, and safe special-waste
+   replicas. Do not stage damaged batteries, pressurized cans or broken lamps.
+5. Arm → Confirm zero → Capture and sort with simulated motors. Record decisions,
+   capture/inference times, heap/largest block, PSRAM and stack margins. Compare
+   probabilities in known-vector tests. Confirm negatives reject and errors fault.
+   Evaluate held-out camera sessions without tuning thresholds on them.
+6. Stop during capture/inference; confirm late results cannot change the fault.
+   Recover only after vision returns, then re-arm/reference. Reset must return
+   UNHOMED with no automatic trigger. Keep physical output disabled until model,
+   power and mechanical acceptance pass; classification does not prove item count.
+
 ## Acceptance record to fill on the bench
 
 | Evidence | Actual value |

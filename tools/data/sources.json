@@ -1,0 +1,18 @@
+{
+  "garbage_v2": {
+    "url": "https://universe.roboflow.com/material-identification/garbage-classification-3/dataset/2",
+    "author": "Material Identification",
+    "version": 2,
+    "license": "CC-BY-4.0",
+    "format": "COCO JSON",
+    "status": "candidate; download and image audit blocked by browser permission"
+  },
+  "battery_v12": {
+    "url": "https://universe.roboflow.com/battery-detection-yuv0z/waste-battery-only/dataset/12",
+    "author": "battery detection",
+    "version": 12,
+    "license": "CC-BY-4.0",
+    "format": "COCO JSON",
+    "status": "candidate; no published test split; object-group resplit required"
+  }
+}

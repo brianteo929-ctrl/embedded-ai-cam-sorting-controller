@@ -9,7 +9,7 @@ flowchart LR
   C --> V[Vision request queue]
   V --> CAM[Camera mutex / JPEG framebuffer]
   CAM --> RGB[Bounded JPEG decode / RGB center crop]
-  RGB --> AI[Mock or external FOMO]
+  RGB --> AI[Mock / classification / FOMO adapter]
   AI --> D[Conservative decision policy]
   D --> E[Cycle-tagged result queue]
   E --> C
@@ -51,7 +51,7 @@ The control task owns all FSM and motor state. Vision owns reusable RGB/model bu
 
 ## Configuration and diagnostics
 
-`main/Kconfig.projbuild` provides GPIO roles, thresholds, exact labels, axis targets/bounds, direction inversion, pulse periods/ramp and deadlines. `sdkconfig.defaults` enables PSRAM and a 4 MB flash profile with a 1500 KiB app partition. Confirm flash/PSRAM on the board before flashing. The user's original root sdkconfig is preserved locally; the helper uses `build/sdkconfig.sorter`.
+`main/Kconfig.projbuild` provides GPIO roles, thresholds, simulation labels, validation gates, axis targets/bounds, direction inversion, pulse periods/ramp and deadlines. Real labels are centralized in `components/fsm/waste_labels.def`. Classification and FOMO have distinct result policies; classification cannot prove object count. `sdkconfig.defaults` enables PSRAM and a 4 MB flash profile with a 1500 KiB app partition. Confirm flash/PSRAM on the board before flashing. The user's original root sdkconfig is preserved locally; the helper uses `build/sdkconfig.sorter`.
 
 HTTP status is JSON: state, faults, modes, reference, decision reason, pulse estimates, worker status, measured capture/inference times, heap/largest block/PSRAM and task stack high-water marks. These runtime values are instrumentation, not measurements obtained in this session. UART logs transitions and results, never pulses. JSON is used for telemetry; build configuration uses Kconfig, not a runtime JSON file.
 

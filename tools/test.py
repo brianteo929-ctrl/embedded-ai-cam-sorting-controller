@@ -12,17 +12,20 @@ cc = os.environ.get("CC") or shutil.which("gcc") or shutil.which("clang")
 if not cc:
     raise SystemExit("Install a native C compiler or set CC (not the Xtensa compiler).")
 groups = {
+    "vision_guard": (["tests/test_vision_guard.c", "components/fsm/fsm.c"], []),
+    "classification": (["tests/test_classification.c", "components/fsm/decision.c", "components/fsm/waste_labels.c", "components/vision/inference_decision.c"], []),
     "core": (["tests/test_core.c", "components/fsm/fsm.c", "components/fsm/decision.c", "components/fsm/motion.c", "components/fsm/image.c"], []),
     "motor": (["tests/test_motor.c", "components/motor/motor.c", "components/fsm/motion.c"], []),
     "simulation": (["tests/test_motor.c", "components/motor/motor.c", "components/fsm/motion.c"], ["-DCONFIG_SORTER_MOTOR_HARDWARE=0"]),
     "inference": (["tests/test_inference.c", "components/vision/inference_mock.c", "components/fsm/decision.c"], []),
     "camera": (["tests/test_camera.c", "components/vision/camera_service.c"], []),
-    "ei_contract": (["tests/test_ei_adapter.cpp", "components/vision/inference_ei.cpp"], []),
+    "ei_contract": (["tests/test_ei_adapter.cpp", "components/vision/inference_ei.cpp", "components/fsm/waste_labels.c"], []),
+    "ei_classification": (["tests/test_ei_classification.cpp", "components/vision/inference_ei_classification.cpp", "components/fsm/waste_labels.c"], ["-DEI_CLASSIFIER_OBJECT_DETECTION=0"]),
 }
 for name in sys.argv[1:] or groups:
     sources, flags = groups[name]
     exe = out / (name + (".exe" if os.name == "nt" else ""))
-    cpp = name == "ei_contract"
+    cpp = name.startswith("ei_")
     compiler = (os.environ.get("CXX") or shutil.which("g++") or shutil.which("clang++")) if cpp else cc
     if not compiler:
         raise SystemExit("Set CXX to a native C++ compiler for the EI adapter contract test.")
