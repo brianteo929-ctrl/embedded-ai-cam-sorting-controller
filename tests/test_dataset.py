@@ -36,10 +36,40 @@ class DatasetTest(unittest.TestCase):
         self.assertTrue(report["ready_for_import"], report["issues"])
         self.assertEqual(report["class_counts"], {"battery": 3})
         self.assertEqual(len(data.digest(self.root / "image0.png")), 64)
+        rng = random.Random(100)
+        for label in ("background", "unknown", "multiple_items"):
+            for split in ("training", "validation", "test"):
+                name = f"{label}-{split}.png"
+                Image.frombytes("RGB", (24, 24), rng.randbytes(24*24*3)).save(self.root / name)
+                self.manifest["records"].append({"path": name, "split": split, "label": label,
+                                                 "group": name, "reviewed": True})
+        missing = self.manifest["records"].pop()
+        with self.assertRaisesRegex(ValueError, "lacks independent"):
+            data.prepare(self.root, self.manifest, self.root / "incomplete")
+        self.assertFalse((self.root / "incomplete").exists())
+        self.manifest["records"].append(missing)
         data.prepare(self.root, self.manifest, self.root / "prepared")
         self.assertEqual(len(list((self.root / "prepared/test").glob("battery.*.png"))), 1)
         with self.assertRaises(ValueError):
             data.prepare(self.root, self.manifest, self.root / "prepared")
+
+    def test_missing_reject_classes(self):
+        with self.assertRaisesRegex(ValueError, "reviewed background"):
+            data.prepare(self.root, self.manifest, self.root / "incomplete")
+        self.assertFalse((self.root / "incomplete").exists())
+
+    def test_overlapping_annotations_and_summary(self):
+        self.manifest["records"][0]["annotations"] = [
+            {"label": "Alkaline", "bbox": [0, 0, 20, 20]},
+            {"label": "Alkaline_jp", "bbox": [1, 1, 20, 20]},
+        ]
+        report = data.audit(self.root, self.manifest)
+        summary = data.summarize(report, self.manifest)
+        self.assertEqual(summary["issue_counts"]["overlapping_annotations_require_review"], 1)
+        self.assertEqual(summary["raw_class_image_counts"], {"Alkaline": 1, "Alkaline_jp": 1})
+        self.assertEqual(summary["annotation_cardinality"], {"multiple": 1, "zero": 2})
+        self.assertFalse(summary["ready_for_import"])
+        self.assertEqual(summary["archive_sha256"], "0"*64)
 
     def test_duplicates_groups_and_corruption(self):
         (self.root / "image1.png").write_bytes((self.root / "image0.png").read_bytes())
@@ -75,9 +105,20 @@ class DatasetTest(unittest.TestCase):
                 "annotations": [{"id": 9, "image_id": 1, "category_id": 5, "bbox": [0, 0, 10, 10]}]}
         path = self.root / "train/_annotations.coco.json"
         path.write_text(json.dumps(coco))
+        with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+            data.import_coco(self.root, {"archive_sha256": "1"*64}, "0"*64, {})
         result = data.import_coco(self.root, self.manifest["source"], "0"*64, {"Alkaline": "battery"})
         self.assertEqual(result["records"][0]["label"], "battery")
         self.assertFalse(result["records"][0]["reviewed"])
+        coco["annotations"].append(dict(coco["annotations"][0], id=10))
+        path.write_text(json.dumps(coco))
+        multiple = data.import_coco(self.root, {}, "0"*64, {})
+        self.assertIsNone(multiple["records"][0]["label"])
+        coco["annotations"] = []
+        path.write_text(json.dumps(coco))
+        empty = data.import_coco(self.root, {}, "0"*64, {})
+        self.assertIsNone(empty["records"][0]["label"])
+        coco["annotations"] = [{"id": 9, "image_id": 1, "category_id": 5, "bbox": [0, 0, 10, 10]}]
         coco["annotations"][0]["image_id"] = 2
         path.write_text(json.dumps(coco))
         with self.assertRaises(ValueError):

@@ -5,7 +5,9 @@
     "version": 2,
     "license": "CC-BY-4.0",
     "format": "COCO JSON",
-    "status": "candidate; download and image audit blocked by browser permission"
+    "archive_sha256": "b82a61e2dc746f0221a95ad9d87655e0f05ea716d2bbc40492f501e81a9af64c",
+    "archive_bytes": 228369116,
+    "status": "audited candidate, not approved; upstream image rights and reject-class coverage unresolved"
   },
   "battery_v12": {
     "url": "https://universe.roboflow.com/battery-detection-yuv0z/waste-battery-only/dataset/12",
@@ -13,6 +15,8 @@
     "version": 12,
     "license": "CC-BY-4.0",
     "format": "COCO JSON",
-    "status": "candidate; no published test split; object-group resplit required"
+    "archive_sha256": "48d9c7e07d2dc0aba7a04393e332da4fd9f8c73984757777af4a63467685b8d9",
+    "archive_bytes": 18714074,
+    "status": "audited candidate, not approved; text-region boxes, cross-split repeated objects, no test set"
   }
 }

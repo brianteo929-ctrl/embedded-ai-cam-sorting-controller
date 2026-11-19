@@ -1,0 +1,112 @@
+{
+  "annotation_cardinality": {
+    "multiple": 285,
+    "one": 446,
+    "zero": 22
+  },
+  "archive_sha256": "48d9c7e07d2dc0aba7a04393e332da4fd9f8c73984757777af4a63467685b8d9",
+  "class_counts": {
+    "<missing>": 307,
+    "battery": 446
+  },
+  "class_split_counts": {
+    "<missing>": {
+      "training": 249,
+      "validation": 58
+    },
+    "battery": {
+      "training": 348,
+      "validation": 98
+    }
+  },
+  "decoded_duplicate_groups": 0,
+  "exact_duplicate_groups": 0,
+  "images": 753,
+  "issue_counts": {
+    "missing_split": 1,
+    "object_session_review_required": 753,
+    "possible_near_duplicate_split_leakage": 1067,
+    "tiny_bbox_review_required": 40,
+    "unsupported_label": 307
+  },
+  "label_note": "Candidate image labels are not reviewed ground truth; box count does not establish item count",
+  "limitations": [
+    "dHash is a review heuristic, not proof of distinct physical objects",
+    "Lighting, pose, occlusion, background and box quality require visual review",
+    "No model training or performance measurement is performed"
+  ],
+  "near_duplicate_pairs": 3315,
+  "raw_class_image_counts": {
+    "Alkaline": 102,
+    "Alkaline_jp": 300,
+    "CR_Lithium": 130,
+    "LR_Alkaline": 45,
+    "Lithium": 194,
+    "Lithium_jp": 66,
+    "Manganese": 29,
+    "Manganese_jp": 125
+  },
+  "raw_class_split_image_counts": {
+    "Alkaline": {
+      "training": 76,
+      "validation": 26
+    },
+    "Alkaline_jp": {
+      "training": 241,
+      "validation": 59
+    },
+    "CR_Lithium": {
+      "training": 101,
+      "validation": 29
+    },
+    "LR_Alkaline": {
+      "training": 36,
+      "validation": 9
+    },
+    "Lithium": {
+      "training": 156,
+      "validation": 38
+    },
+    "Lithium_jp": {
+      "training": 52,
+      "validation": 14
+    },
+    "Manganese": {
+      "training": 24,
+      "validation": 5
+    },
+    "Manganese_jp": {
+      "training": 99,
+      "validation": 26
+    }
+  },
+  "raw_object_counts": {
+    "Alkaline": 102,
+    "Alkaline_jp": 336,
+    "CR_Lithium": 138,
+    "LR_Alkaline": 45,
+    "Lithium": 205,
+    "Lithium_jp": 76,
+    "Manganese": 42,
+    "Manganese_jp": 166
+  },
+  "ready_for_import": false,
+  "schema": 1,
+  "sizes": {
+    "640x640": 753
+  },
+  "source": {
+    "archive_bytes": 18714074,
+    "archive_sha256": "48d9c7e07d2dc0aba7a04393e332da4fd9f8c73984757777af4a63467685b8d9",
+    "author": "battery detection",
+    "format": "COCO JSON",
+    "license": "CC-BY-4.0",
+    "status": "audited candidate, not approved; text-region boxes, cross-split repeated objects, no test set",
+    "url": "https://universe.roboflow.com/battery-detection-yuv0z/waste-battery-only/dataset/12",
+    "version": 12
+  },
+  "split_counts": {
+    "training": 597,
+    "validation": 156
+  }
+}

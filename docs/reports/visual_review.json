@@ -1,0 +1,546 @@
+{
+  "datasets": {
+    "battery_v12": {
+      "annotation_sha256": {
+        "train": "92342bbd5771a27a53aada451931dab959a2a1f1b7fa5006ca8d7b64e1863299",
+        "valid": "4bdb64bdca97e3c0cc1c5a04317d591e9785192c0e9f6fca6cf95aabde68d6e3"
+      },
+      "cross_split_pair_review": [
+        {
+          "observation": "Same physical battery appears across training/validation.",
+          "paths": [
+            "train/image-2024-08-03T181421-421_png_jpg.rf.1da715a242cee2b10490d87b45c440dd.jpg",
+            "valid/image-2024-08-03T181421-421_png.rf.da16439312c7912f73fa5301725c5048.jpg"
+          ],
+          "sha256": [
+            "a693c8a7c3604a3e4f90fdec188806ff2b50b28be16c52a59c1912630d81a1e2",
+            "6353f09c2ff9c6e98a88263dc91a72f2b64144688e4cd7681b4af92d8cf26f37"
+          ]
+        },
+        {
+          "observation": "Same physical battery appears across training/validation.",
+          "paths": [
+            "train/image-2024-08-03T181443-351_png_jpg.rf.97927075045d8577dd3efa21feb1b4f8.jpg",
+            "valid/image-2024-08-03T181443-351_png.rf.ed833b0cd3adada6c685fd0ca769c559.jpg"
+          ],
+          "sha256": [
+            "bbaa85930ae49b5c3671501c800146893aad4ef32736b42b5bb1f5e1367583b7",
+            "ec6c0b3fd66fab56335ef66e86a3acc641c8d735c76c812dbf097c614a547600"
+          ]
+        },
+        {
+          "observation": "Same physical battery appears across training/validation.",
+          "paths": [
+            "train/image-72-_png.rf.7d5c4550a7a802fe9d177d5aeba03a58.jpg",
+            "valid/image-72-_png_jpg.rf.7b27c2fd2f3f92116185a22723f9b76d.jpg"
+          ],
+          "sha256": [
+            "d794cfd97736ddbcb3bb9767ea2cb6436802002e1fedc8689c317d1c05f52839",
+            "6f7ad504610a065c22a933ed25d220b9f2fa1749235904ed74c4f956b7e90283"
+          ]
+        },
+        {
+          "observation": "Same physical battery appears across training/validation.",
+          "paths": [
+            "train/IMG_E6460_JPG.rf.30aadbee4ef04ef02bd327cafff6914b.jpg",
+            "valid/00002-IMG_E6460_png.rf.096407a35672a7cfb9214e5f5d9ff948.jpg"
+          ],
+          "sha256": [
+            "992db7d39c379b3ec7ec175107e7a2e49be8bfb257c3d14a764b76e9245d120f",
+            "792fa06a4eb8b83ee9b4674ac1f04a311620fca9b04f927e5312acb6a6823882"
+          ]
+        }
+      ],
+      "full_audit_sha256": "3342fde349e9453d96fabdf667b207f5377d1416ebb0ddc946c40753f2a75301",
+      "per_class": 1,
+      "readme_sha256": {
+        "README.dataset.txt": "8766a0820034540759209bd7468afae4be7771a92bbb0317e6a8a7b09956a8e8",
+        "README.roboflow.txt": "079e25d15b4502eea89904c421cbef053258b6b8f937d168364203e40a6abe32"
+      },
+      "samples": [
+        {
+          "approved": false,
+          "index": 0,
+          "inspected": true,
+          "observation": "One casing; overlay surrounds chemistry text, not whole battery.",
+          "path": "train/image-2024-08-03T181443-351_png_jpg.rf.97927075045d8577dd3efa21feb1b4f8.jpg",
+          "sha256": "bbaa85930ae49b5c3671501c800146893aad4ef32736b42b5bb1f5e1367583b7"
+        },
+        {
+          "approved": false,
+          "index": 1,
+          "inspected": true,
+          "observation": "Single cylindrical battery.",
+          "path": "train/IMG_E6125_png_png_jpg.rf.f57a744a5b65e57dc13e6c9437d7b088.jpg",
+          "sha256": "2eb08183848bd94a3cc9ee43d14e711551bd343008e4db6dc6ad358fee604dd8"
+        },
+        {
+          "approved": false,
+          "index": 2,
+          "inspected": true,
+          "observation": "Coin cell.",
+          "path": "valid/coin_jpg.rf.c7383688f9259605b3bb0c9a5e92ef47.jpg",
+          "sha256": "70f3a1db7f4d35f4e8563ae842e86e05e11910f1b5a58f5158e6bcbcf0cf2b57"
+        },
+        {
+          "approved": false,
+          "index": 3,
+          "inspected": true,
+          "observation": "One casing; two annotations for text regions.",
+          "path": "train/image-71-_png_jpg.rf.81a7117e89304b678db8882ebc85ebb0.jpg",
+          "sha256": "efec3dba409414e121e77d6cf114c0df10a53793a20bd6817ae73133799ab6dd"
+        },
+        {
+          "approved": false,
+          "index": 4,
+          "inspected": true,
+          "observation": "Product battery photo; overlay surrounds chemistry symbol.",
+          "path": "train/s0039799_jpg.rf.408dfc9815f0d9208f93effacb7f6f48.jpg",
+          "sha256": "d16f4462c0f9e7121aba36a96349131be9668da93c17b9b1e6a49b0f06dde902"
+        },
+        {
+          "approved": false,
+          "index": 5,
+          "inspected": true,
+          "observation": "Single cylindrical battery.",
+          "path": "train/test_1080_00200_jpg.rf.dc9a059fb1a64e379a5c9bab36b71daa.jpg",
+          "sha256": "5da6298368c26cc2205d176402d656e4698001412338fa343a298e20581a3850"
+        },
+        {
+          "approved": false,
+          "index": 6,
+          "inspected": true,
+          "observation": "Single cylindrical battery.",
+          "path": "train/00003-4086130865_png.rf.36828a669a273fe678161a0a9810b874.jpg",
+          "sha256": "66565f6f049165130662b247296f8f72645e19afac75c4f388b1609151b96470"
+        },
+        {
+          "approved": false,
+          "index": 7,
+          "inspected": true,
+          "observation": "Single battery on tabletop.",
+          "path": "valid/00003-IMG_E6461_png.rf.ef2dd24de6dfaea8534ada73dcd3be15.jpg",
+          "sha256": "753ca2ec8383eeeb2364a14b69127c894fd85616dd3be12d833edcbeed9707fb"
+        },
+        {
+          "approved": false,
+          "index": 8,
+          "inspected": true,
+          "observation": "Battery present despite zero annotations.",
+          "path": "train/00007-4086130865_png.rf.34bf28681e3181eee9ec1ee50ca011a3.jpg",
+          "sha256": "2b11862645106298a082f327bc5db6b27f0a3efa027a5bb78173e7716a998d70"
+        },
+        {
+          "approved": false,
+          "index": 9,
+          "inspected": true,
+          "observation": "Battery present despite zero annotations.",
+          "path": "train/00019-IMG_E6477_png.rf.9dd1cfe18d962d87d1f14d7c57c02584.jpg",
+          "sha256": "dfd27dd2cb0d465607793fa3b9b507ccffc2a89e50f4cfe507e11b1d499f61dc"
+        },
+        {
+          "approved": false,
+          "index": 10,
+          "inspected": true,
+          "observation": "Battery present despite zero annotations.",
+          "path": "valid/00005-IMG_E6463_png.rf.a2e731ce289e474bb4a1c4803f897997.jpg",
+          "sha256": "568a4800bf254c6f370cb7d00343a095e39be57aa17e38ca1aac96eb4559f7f0"
+        },
+        {
+          "approved": false,
+          "index": 11,
+          "inspected": true,
+          "observation": "Battery pack present despite zero annotations.",
+          "path": "train/00043-IMG_E6501_png.rf.f45c347bb344642c392eaa98da094207.jpg",
+          "sha256": "f02241b027380cffcf6e426873d3c082175e45cd75fd7c3b9ed3df094ef3a235"
+        },
+        {
+          "approved": false,
+          "index": 12,
+          "inspected": true,
+          "observation": "Multiple batteries; only two text-region annotations.",
+          "path": "valid/00061-4053057643_png.rf.fb416761bcba9a60c3783fddeb6f0913.jpg",
+          "sha256": "ed0dfc41bc0416762c9c5b63c56e970b788445f424098f91a678104e5d9142e9"
+        },
+        {
+          "approved": false,
+          "index": 13,
+          "inspected": true,
+          "observation": "One battery pack; three text-region annotations.",
+          "path": "train/00006-3252514017_png.rf.e45ae41e8ca2254b74415467d8511f0f.jpg",
+          "sha256": "faf1154b88ee04a48dac813e5421589727275ea2229421889e8c96269c2c9149"
+        },
+        {
+          "approved": false,
+          "index": 14,
+          "inspected": true,
+          "observation": "One casing; two text-region annotations.",
+          "path": "train/IMG_6520_JPG.rf.d2b341d677a6a8d0825d7db613cf4fe4.jpg",
+          "sha256": "8675b60ee6c589b488b675e432c7a40d2836583b1498233d04bc3c986002938b"
+        },
+        {
+          "approved": false,
+          "index": 15,
+          "inspected": true,
+          "observation": "One casing; four text-region annotations.",
+          "path": "train/image-62-_png.rf.92927845a1cd811c9ca751520e547df4.jpg",
+          "sha256": "62088cce2e23672561c821f8120dfbf1c6588dbd9ca349a74c3422ef5f1f6bda"
+        },
+        {
+          "approved": false,
+          "index": 16,
+          "inspected": true,
+          "observation": "One battery; two annotations.",
+          "path": "train/00017-4050673591_png.rf.a2c845cf2e357c159797d2793375b75f.jpg",
+          "sha256": "d01d82f56050ede3755cc06d8d3db0348ca481632805afd3e022f209dec269fb"
+        },
+        {
+          "approved": false,
+          "index": 17,
+          "inspected": true,
+          "observation": "One rectangular battery; two annotations.",
+          "path": "train/00015-363957405_png.rf.e7db433bcf08abc45c7172db391216f1.jpg",
+          "sha256": "22e836c576e68ab1a459158413ca1d8d0851379d962df59263ff58fb15639b00"
+        },
+        {
+          "approved": false,
+          "index": 18,
+          "inspected": true,
+          "observation": "One battery; two annotations.",
+          "path": "train/00036-IMG_E6494_png.rf.bb2777a4b8d51e9c6cfc763664f0a9aa.jpg",
+          "sha256": "cb6bf45ce44796b0e918b8205dc2d4fa15a5f36c282eb4ac09dcd2842cbea4db"
+        },
+        {
+          "approved": false,
+          "index": 19,
+          "inspected": true,
+          "observation": "Two batteries; three annotations.",
+          "path": "train/images-7-_jpg.rf.c3200fba51e57cb2f39cb87b341b927d.jpg",
+          "sha256": "e5a77009a3262b9cf69564b44194c25be5d58f6bc7555badf86c63138b53da53"
+        }
+      ]
+    },
+    "garbage_v2": {
+      "annotation_sha256": {
+        "test": "013959ab37978302d36af2aacb7c69aa3cbbe60d0e50d2ea4eb865dd1fbc77f9",
+        "train": "d91d13f3239c0469e2425ff368b0984598887f10152334f9b58cb69eb5100492",
+        "valid": "c97e2dec2160be590b5b9981d69a2de065a29af32a4fb3ee7befcf344e2df8e1"
+      },
+      "cross_split_pair_review": [
+        {
+          "observation": "Different images with similar silhouette; dHash false positive.",
+          "paths": [
+            "train/glass2622_jpg.rf.441f028442cd2bda986e75da0858196f.jpg",
+            "valid/glass2433_jpg.rf.0886e8c3c6bb24250460fcea0aeb45ce.jpg"
+          ],
+          "sha256": [
+            "b3ca1c7fde806b66e1834e197c85aab8c2d91f6832bd92c06f5d20eb488a92c1",
+            "aa3e18a3026032a7532dc2187aeda7ef89043b67889b79f77a6bddbe747be665"
+          ]
+        },
+        {
+          "observation": "Different images with similar silhouette; dHash false positive.",
+          "paths": [
+            "train/glass276_jpg.rf.378e77ab397dba0dc994f2d6069b704d.jpg",
+            "valid/glass3103_jpg.rf.107b716996c40c9918098af37a574bed.jpg"
+          ],
+          "sha256": [
+            "adc33d48dff006db034d7f2d7cac604623e2c78524336bbb289071b70d7b9afd",
+            "d303332421a87096a640b49138d846083c8a22be306c1e0efbc48ac209379100"
+          ]
+        },
+        {
+          "observation": "Different images with similar silhouette; dHash false positive.",
+          "paths": [
+            "train/glass1932_jpg.rf.64e7cc9595d16b78756c69f7634c9180.jpg",
+            "valid/glass401_jpg.rf.1dca0aadbb28ed8a62f3bcf22ae0d75f.jpg"
+          ],
+          "sha256": [
+            "e54910de97affc5b8f994c6798461044fcffb9425f3fe4dabffdec68c49970a2",
+            "bf8de13626e2c5ec69eb7811646edfae635d12f83715ae1918f53a197ad46664"
+          ]
+        },
+        {
+          "observation": "Near-copy of the same cardboard-box photograph across training/validation.",
+          "paths": [
+            "train/cardboard287_jpg.rf.94e08cac518cb09db347bc13b7f6e537.jpg",
+            "valid/cardboard627_jpg.rf.2115d3492f95bfbacd245a1b0c93c266.jpg"
+          ],
+          "sha256": [
+            "03f9abc36a1bd0914b388eb53d8639c4a2bcc5473511b747f05a57ec79d843ca",
+            "932af53eff9ec763c24f88a7a85ea7a078bd64d34d1914c6fa346128c3d0b590"
+          ]
+        }
+      ],
+      "full_audit_sha256": "bd0ef1133dd6a50954255662d22630c6bcf3790bd1e3a47d60f8527e30377ada",
+      "per_class": 4,
+      "readme_sha256": {
+        "README.dataset.txt": "2741c4b93c0bc2e653ffb8dfb3214a7fdaeccac4a49dd3db3479dc776e13d30b",
+        "README.roboflow.txt": "e93656173c7ec0ac556e15b76b28594d8966dbafd7c4297eaec92c152c2eb8b5"
+      },
+      "samples": [
+        {
+          "approved": false,
+          "index": 0,
+          "inspected": true,
+          "observation": "Produce photo with a stock credit strip.",
+          "path": "train/biodegradable831_jpg.rf.32b3ba5669ac640423c11a06826d1f15.jpg",
+          "sha256": "526fd66a90b1ae591bf33bc37cc059e7b6cf0e9faa79a42802f509f5864d4e70"
+        },
+        {
+          "approved": false,
+          "index": 1,
+          "inspected": true,
+          "observation": "Produce photo with stock credit strip.",
+          "path": "train/biodegradable361_jpg.rf.28190f20c87e899a242d5535bfe525a3.jpg",
+          "sha256": "6297e3536dcb6b67f1b33c960021edb1170f1a88807d592986535b0c2d3b0f79"
+        },
+        {
+          "approved": false,
+          "index": 2,
+          "inspected": true,
+          "observation": "Food photo with stock watermark.",
+          "path": "valid/biodegradable1370_jpg.rf.c949c0f55380da5047cc6f55fe674508.jpg",
+          "sha256": "d1ab6663c65412b95beb684510628467f99f00435b57efb346372cd742e9ffe6"
+        },
+        {
+          "approved": false,
+          "index": 3,
+          "inspected": true,
+          "observation": "Food/bread photo with stock credit strip.",
+          "path": "train/biodegradable1146_jpg.rf.d38d761945bd4251bed65b6b773af6de.jpg",
+          "sha256": "69180f17a56edf72d5b93adcaed9c5cc02d554eae421ccb298adb8981a0031cc"
+        },
+        {
+          "approved": false,
+          "index": 4,
+          "inspected": true,
+          "observation": "Product photo of a large cardboard container.",
+          "path": "valid/cardboard1599_jpg.rf.d010a811183b669bbcdf593a7e30fa26.jpg",
+          "sha256": "b56dc5c0e3dd6a309834e5696b0e5d595ffa1cdc35f2142f94b38ec599b9caab"
+        },
+        {
+          "approved": false,
+          "index": 5,
+          "inspected": true,
+          "observation": "Cardboard photo with stock credit strip.",
+          "path": "train/cardboard213_jpg.rf.5baae60f8f7cf0730167e3618265801e.jpg",
+          "sha256": "43045c3e295b30f9caac3ce41c357feb9ecd04410c8b64b2d9efaa583b4e88ce"
+        },
+        {
+          "approved": false,
+          "index": 6,
+          "inspected": true,
+          "observation": "Tight crop of cardboard surface.",
+          "path": "train/cardboard1070_jpg.rf.3a3cb17c421ada105a740e1d30431ff6.jpg",
+          "sha256": "4545ff798a2262693b6ab81535b62ad955ba019f2e7adaab29603203a3cf2e49"
+        },
+        {
+          "approved": false,
+          "index": 7,
+          "inspected": true,
+          "observation": "Tight crop of labeled cardboard surface.",
+          "path": "train/cardboard507_jpg.rf.6c3297d19eef9a6eb34816dd4b1c9ba3.jpg",
+          "sha256": "f631040adf1de187f1f6fd71433a06e235533aa4c1fd496c087d3c257676782d"
+        },
+        {
+          "approved": false,
+          "index": 8,
+          "inspected": true,
+          "observation": "Glass bottle photographed on a surface.",
+          "path": "train/glass1823_jpg.rf.fb9d7786d1a758cee06b9853ce4f30e2.jpg",
+          "sha256": "1e57ed134e3e0eb760436d268517d1236c777437cd14783316ade57a54bd93b4"
+        },
+        {
+          "approved": false,
+          "index": 9,
+          "inspected": true,
+          "observation": "Glass product photo with watermark.",
+          "path": "valid/glass2565_jpg.rf.cdb6227fef8236d01e49a6b67a3dbac1.jpg",
+          "sha256": "a5ce11e9cd5bea976d2a0578a31a7e6fa35568309cc0c1d33a80e306a137759d"
+        },
+        {
+          "approved": false,
+          "index": 10,
+          "inspected": true,
+          "observation": "Glass fragment, not a bottle.",
+          "path": "train/glass1633_jpg.rf.be31ca8251904e829430660f6d75e907.jpg",
+          "sha256": "38bf8acb3351c7ce89b5593069bc0b69bfe4215ecd72e1745d5f82432aef09af"
+        },
+        {
+          "approved": false,
+          "index": 11,
+          "inspected": true,
+          "observation": "Inverted green glass container.",
+          "path": "train/glass74_jpg.rf.287a0c74e2674b5362f196a2da4adad8.jpg",
+          "sha256": "5306db8924774dac1314c9eea5f8454ab772e79482495d2d81eecf1b6c95d951"
+        },
+        {
+          "approved": false,
+          "index": 12,
+          "inspected": true,
+          "observation": "Metal can viewed from an end.",
+          "path": "valid/metal686_jpg.rf.f19bf260f98533f567094fe1a20013b1.jpg",
+          "sha256": "4502d1be44d0b38b1fba68c66fdbe03882acaaeae5b1f035d6b8ba4b543b7fb8"
+        },
+        {
+          "approved": false,
+          "index": 13,
+          "inspected": true,
+          "observation": "Small metal-container product image.",
+          "path": "train/metal1002_jpg.rf.b17e87c0868b2cff0a416f97cbeceb66.jpg",
+          "sha256": "ccbc2022b2c0f0b117327a6290268b031cec2a7fa7723cd606e4a9978fc66cec"
+        },
+        {
+          "approved": false,
+          "index": 14,
+          "inspected": true,
+          "observation": "Foil, not an aluminum can.",
+          "path": "valid/metal479_jpg.rf.056e99b2bb8d4785ae379b5327358374.jpg",
+          "sha256": "359805150192727d4074074fd4049eac9456bf80878ed224dc9b86ea584c4d5f"
+        },
+        {
+          "approved": false,
+          "index": 15,
+          "inspected": true,
+          "observation": "Crushed beverage can; composition not established visually.",
+          "path": "train/metal397_jpg.rf.5a7185c31cb00ce567c861b8e033c00c.jpg",
+          "sha256": "da5ebbf4a2a056677d1052b5f76a4729295e159e2330d6c1beca7ffe80b5bb05"
+        },
+        {
+          "approved": false,
+          "index": 16,
+          "inspected": true,
+          "observation": "Newspaper on a background.",
+          "path": "test/paper1695_jpg.rf.c11903b75517e5c607f7121be0c2e874.jpg",
+          "sha256": "e4259aafab31feb1988460f1c0db6087cada012c65fc86252fb27a25d03ca796"
+        },
+        {
+          "approved": false,
+          "index": 17,
+          "inspected": true,
+          "observation": "Crumpled paper on a surface.",
+          "path": "train/paper1618_jpg.rf.6f3ebc40297ba62161955c590e1b1ae0.jpg",
+          "sha256": "8cae2adafab60d4ebfa8fd0dee7c818a323a664053cfc6c86a1bb061dc65ba67"
+        },
+        {
+          "approved": false,
+          "index": 18,
+          "inspected": true,
+          "observation": "Sheet of lined paper on a surface.",
+          "path": "train/paper1425_jpg.rf.cbf0c93c09e6aefe456c284d0220d92b.jpg",
+          "sha256": "96a2ecd8a92cc6527a02904ddd7560a200924e11ee93153eb0e69e0f6c23b3e3"
+        },
+        {
+          "approved": false,
+          "index": 19,
+          "inspected": true,
+          "observation": "Cup labeled PAPER; material cannot be established visually.",
+          "path": "train/paper1153_jpg.rf.2e0f9e2895885223f8b8002e1118f40d.jpg",
+          "sha256": "1c8646f149685dd61a3eb72f6a69f9613bb85746ca6e312d49117319d110b209"
+        },
+        {
+          "approved": false,
+          "index": 20,
+          "inspected": true,
+          "observation": "Partly cropped plastic bottle.",
+          "path": "test/plastic999_jpg.rf.d6f8fc1a8acc7875177dd0a0215c487b.jpg",
+          "sha256": "8f9752e8d00818a820765355f04e12db1eb035918ddbed9b0a33be8b22c3cbc5"
+        },
+        {
+          "approved": false,
+          "index": 21,
+          "inspected": true,
+          "observation": "Clear plastic lid, not a bottle.",
+          "path": "train/plastic180_jpg.rf.6592ee30ecad5e6b30e33482b0bc9b35.jpg",
+          "sha256": "2c49754ccf89733abcd3bc024500a8f019ea0bd837f2e3cfba3537f5d886b280"
+        },
+        {
+          "approved": false,
+          "index": 22,
+          "inspected": true,
+          "observation": "Clear plastic tray, not a bottle.",
+          "path": "train/plastic207_jpg.rf.6a33082715328673e1e57ca11912b1ad.jpg",
+          "sha256": "093e9727a3d0d71861db4c268654f4b55acf75d84a549b2da087cb97071396cb"
+        },
+        {
+          "approved": false,
+          "index": 23,
+          "inspected": true,
+          "observation": "Plastic bag, not a bottle.",
+          "path": "test/plastic592_jpg.rf.35ba511f2ef2bccd800c4eae488c5524.jpg",
+          "sha256": "3e2a7084d77b2d98d729634a4fefdd42e057c726740e6be83eff06bf828be602"
+        },
+        {
+          "approved": false,
+          "index": 24,
+          "inspected": true,
+          "observation": "Two bottles with separately annotated caps: four boxes.",
+          "path": "train/glass1302_jpg.rf.32277da3581c9af5e38da99f1834bbba.jpg",
+          "sha256": "ab968fab0f7ab2b585ec682416e112e69a5b102a2a1778ab3fbf8584c55ee5f0"
+        },
+        {
+          "approved": false,
+          "index": 25,
+          "inspected": true,
+          "observation": "Multiple spoiled fruit on a plate.",
+          "path": "train/biodegradable1112_jpeg.rf.cacb60ab2f347725ebb7d21983c57101.jpg",
+          "sha256": "22944e2da2204968e8fc1167455f56378327751cd7e774dd9a49804e51bdfaa0"
+        },
+        {
+          "approved": false,
+          "index": 26,
+          "inspected": true,
+          "observation": "Multiple glass bottles in a product composition.",
+          "path": "train/glass2561_jpg.rf.9f7662fc4a3644dbe1cb79651040e921.jpg",
+          "sha256": "df5664c13f59924bccdde7bcbe1f757d90173a5c4493fb22a12a2182b21d553e"
+        },
+        {
+          "approved": false,
+          "index": 27,
+          "inspected": true,
+          "observation": "Dense food composition, many annotations.",
+          "path": "train/biodegradable523_jpg.rf.1fd73a1d93deef266c487b1691b83652.jpg",
+          "sha256": "c26b55a89a248586ab190bcba5ca426462cafb3be1651db786cc0cde22d787ed"
+        },
+        {
+          "approved": false,
+          "index": 28,
+          "inspected": true,
+          "observation": "Four jars with separately annotated lids: eight boxes.",
+          "path": "train/glass814_jpg.rf.98d8dfaedc88ead1a94bceeb28d6af6f.jpg",
+          "sha256": "469af43588105fc73ec6829bf3fe2e031fa27080e3fbe93bec71a318de43f5dd"
+        },
+        {
+          "approved": false,
+          "index": 29,
+          "inspected": true,
+          "observation": "Dense produce composition.",
+          "path": "train/biodegradable396_jpg.rf.7093250c5b3be6747c1dfcc871badde4.jpg",
+          "sha256": "1cc26705d10dedebac8048fa9c8a205ec2af9c180d3b80f6d29ca507fe40af3f"
+        },
+        {
+          "approved": false,
+          "index": 30,
+          "inspected": true,
+          "observation": "One cardboard box and detached lid: two annotations.",
+          "path": "valid/cardboard629_jpg.rf.7c10d343ed9c8706d85b8ac07d842478.jpg",
+          "sha256": "79930f409c39845820957de57fc2996ec644f557c1b9550baf9077ce65c5d37a"
+        },
+        {
+          "approved": false,
+          "index": 31,
+          "inspected": true,
+          "observation": "Food/produce photo with stock credit strip.",
+          "path": "train/biodegradable1872_jpeg.rf.395387c1f981f1d6f40237f97a2cd94e.jpg",
+          "sha256": "708c946780db480413815497a50f73d648ede3b626c515b952546e3e4e780695"
+        }
+      ]
+    }
+  },
+  "date": "2026-11-19",
+  "image_redistribution": false,
+  "purpose": "Candidate screening, not training-label approval",
+  "schema": 1,
+  "seed": 1168582
+}

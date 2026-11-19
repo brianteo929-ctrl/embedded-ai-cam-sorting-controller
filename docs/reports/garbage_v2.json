@@ -1,0 +1,135 @@
+{
+  "annotation_cardinality": {
+    "multiple": 5383,
+    "one": 5081
+  },
+  "archive_sha256": "b82a61e2dc746f0221a95ad9d87655e0f05ea716d2bbc40492f501e81a9af64c",
+  "class_counts": {
+    "<missing>": 5383,
+    "BIODEGRADABLE": 491,
+    "CARDBOARD": 894,
+    "GLASS": 1277,
+    "METAL": 719,
+    "PAPER": 1281,
+    "PLASTIC": 419
+  },
+  "class_split_counts": {
+    "<missing>": {
+      "test": 442,
+      "training": 3741,
+      "validation": 1200
+    },
+    "BIODEGRADABLE": {
+      "training": 348,
+      "validation": 143
+    },
+    "CARDBOARD": {
+      "test": 4,
+      "training": 626,
+      "validation": 264
+    },
+    "GLASS": {
+      "training": 897,
+      "validation": 380
+    },
+    "METAL": {
+      "test": 96,
+      "training": 514,
+      "validation": 109
+    },
+    "PAPER": {
+      "test": 372,
+      "training": 907,
+      "validation": 2
+    },
+    "PLASTIC": {
+      "test": 128,
+      "training": 291
+    }
+  },
+  "decoded_duplicate_groups": 0,
+  "exact_duplicate_groups": 0,
+  "images": 10464,
+  "issue_counts": {
+    "object_session_review_required": 10464,
+    "out_of_bounds_bbox": 17,
+    "overlapping_annotations_require_review": 177,
+    "possible_near_duplicate_split_leakage": 5064,
+    "tiny_bbox_review_required": 2268,
+    "unsupported_label": 10464
+  },
+  "label_note": "Candidate image labels are not reviewed ground truth; box count does not establish item count",
+  "limitations": [
+    "dHash is a review heuristic, not proof of distinct physical objects",
+    "Lighting, pose, occlusion, background and box quality require visual review",
+    "No model training or performance measurement is performed"
+  ],
+  "near_duplicate_pairs": 10281,
+  "raw_class_image_counts": {
+    "BIODEGRADABLE": 2287,
+    "CARDBOARD": 1502,
+    "GLASS": 2684,
+    "METAL": 1898,
+    "PAPER": 1768,
+    "PLASTIC": 1464
+  },
+  "raw_class_split_image_counts": {
+    "BIODEGRADABLE": {
+      "test": 8,
+      "training": 1603,
+      "validation": 676
+    },
+    "CARDBOARD": {
+      "test": 11,
+      "training": 1053,
+      "validation": 438
+    },
+    "GLASS": {
+      "training": 1879,
+      "validation": 805
+    },
+    "METAL": {
+      "test": 172,
+      "training": 1328,
+      "validation": 398
+    },
+    "PAPER": {
+      "test": 515,
+      "training": 1238,
+      "validation": 15
+    },
+    "PLASTIC": {
+      "test": 354,
+      "training": 1019,
+      "validation": 91
+    }
+  },
+  "raw_object_counts": {
+    "BIODEGRADABLE": 45407,
+    "CARDBOARD": 4698,
+    "GLASS": 7809,
+    "METAL": 5841,
+    "PAPER": 4390,
+    "PLASTIC": 5945
+  },
+  "ready_for_import": false,
+  "schema": 1,
+  "sizes": {
+    "416x416": 10464
+  },
+  "source": {
+    "archive_bytes": 228369116,
+    "archive_sha256": "b82a61e2dc746f0221a95ad9d87655e0f05ea716d2bbc40492f501e81a9af64c",
+    "author": "Material Identification",
+    "format": "COCO JSON",
+    "license": "CC-BY-4.0",
+    "status": "audited candidate, not approved; upstream image rights and reject-class coverage unresolved",
+    "url": "https://universe.roboflow.com/material-identification/garbage-classification-3/dataset/2",
+    "version": 2
+  },
+  "split_counts": {
+    "test": 1042,
+    "training": 7324,
+    "validation": 2098
+  }
+}

@@ -4,9 +4,12 @@
 [1168582](https://studio.edgeimpulse.com/studio/1168582). Impulse/deployment version,
 checksum, SDK version, selected dataset, quantization, per-class precision/recall/F1,
 confusion matrix, false accepts, tensor arena and latency are all **pending**, not
-zero. Browser permissions prevent private-project inspection/import/training.
-The user's configured target is ESP32 240 MHz / AI-Thinker ESP32-CAM, 512 KiB model
-RAM, 512 KiB model ROM and 1000 ms. No model was reused or trained in this work.
+zero. Browser access and GitHub sign-in now work. The existing private project is
+empty, uses one label per item, and its target was independently verified as
+ESP32 240 MHz / AI-Thinker ESP32-CAM, 512 KB model RAM, 512 KB model ROM and 1000 ms.
+Two datasets were downloaded and audited but neither is approved for training:
+upstream rights, independent splits, annotation semantics and real reject examples
+remain unresolved. No model was reused or trained in this work.
 
 See [dataset selection](DATASET_SELECTION.md), [audit workflow](DATASET_AUDIT.md)
 and [architecture decision](MODEL_SELECTION.md).

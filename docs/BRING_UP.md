@@ -17,6 +17,11 @@ No serial device was available during this implementation. All steps below are *
 
 ## Inference-only session after a verified export is installed
 
+Before training, follow [DATA_COLLECTION.md](DATA_COLLECTION.md) for owned images
+of the actual plate, including rejection cases. Browser access is available; the
+current blocker is accepted training data, not a serial device or login. Camera
+collection can use the existing mock-inference build with VMOT disconnected.
+
 1. Keep **VMOT disconnected**, `SORTER_MOTOR_HARDWARE=n` and
    `SORTER_MODEL_VALIDATED=n`. Follow AI_MODEL.md to install/select the adapter.
    `tools\idf.cmd build size` must pass before flashing.

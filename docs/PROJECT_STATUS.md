@@ -1,5 +1,54 @@
 # Project status
 
+## Dataset audit checkpoint - 2026-11-19
+
+Browser access and GitHub sign-in work. Existing private Edge Impulse project
+1168582 is empty, with one label per item and no published model. Target settings
+were independently verified: ESP-EYE/ESP32 240 MHz, custom AI-Thinker ESP32-CAM,
+512 KB RAM, 512 KB ROM, 1000 ms. No second project, Keys access or API token was used.
+
+Both selected CC-BY-4.0 COCO exports downloaded successfully. Every image decoded:
+10,464 garbage images and 753 battery images. Full checks, hashes, raw class/split
+counts and sampled visual findings are in DATASET_AUDIT.md and `docs/reports/`.
+Garbage: 17 out-of-bounds boxes, 2,268 tiny boxes, 177 overlapping box pairs and
+5,064 possible cross-split near pairs; no glass test images. Stock-watermarked
+photos leave upstream rights unresolved. Battery: text-region annotations rather
+than whole-object boxes, 40 tiny boxes, 1,067 possible cross-split near pairs and
+no test split. Four inspected cross-split battery pairs repeat physical objects.
+Near-pair counts are heuristics; garbage sampling also found false positives.
+Neither source provides verified empty-plate/unknown rejection examples.
+
+The converter now leaves zero/multiple-annotation labels unset; it cannot invent
+background or multiple-item labels from box count. Preparation requires waste and
+all three reject classes, each in training/validation/test. Six offline dataset
+fixture tests pass. Deterministic review sheets and aggregate reports are
+reproducible. Dataset acceptance correctly fails; no images were auto-approved.
+
+**Current external blocker: accepted original data**, including upstream rights,
+object/session-separated groups and plate/reject imagery. See DATA_COLLECTION.md
+for the exact capture and metadata procedure. Both bounded audits are complete;
+no raw upload, impulse creation, training or real model export is justified yet.
+The existing classification/FOMO adapters and simulated motors remain unchanged.
+
+Public EI candidate 676802 inspected directly: grayscale MobileNetV2 96x96 0.35,
+10 classes, 13 epochs, learning rate 0.0005. Its int8 validation accuracy is 81.6%;
+Raspberry Pi 5 EON RAM-optimized profile reports 214.6K RAM, 619.9K flash, 5 ms.
+These are source-project results, not our measurements or an ESP32 profile. It
+exceeds the flash budget and lacks verified source/reject coverage; not adopted.
+
+Local artifacts retained intentionally: the two archives/extracted datasets and
+full audit manifests under ignored `datasets/`, original downloads in Downloads,
+contact sheets and regression logs under ignored `build/`, and the existing
+Python environment/build outputs. No dataset image, archive or credential enters
+Git. Root sdkconfig and partition table are unchanged. No physical tests occurred.
+
+Audit-milestone verification: `npm test` passes all nine native targets, metadata
+and absent-artifact checks, and three model-tool tests; six dataset-tool tests pass.
+Incremental `tools\idf.cmd build size size-components` passes at 892,080 bytes,
+643,920 bytes / 42% app space free, static DRAM 51,059 bytes. The hardware-profile
+compile passes at 798,880 bytes, 737,120 bytes / 48% free. No model is installed;
+these sizes match the preparation milestone. Full logs remain in `build/`.
+
 ## Model work checkpoint — 2026-11-19
 
 Baseline reestablished on clean `main` at `f9546c1`: all six native targets pass;
@@ -8,21 +57,19 @@ IRAM 93,635 bytes, static DRAM 51,059 bytes). Hardware configuration also builds
 (797,760 bytes); its only warnings concern temporary IDF activation cleanup.
 Root `sdkconfig` SHA-256: `c6ea3a17eefc9794ba4335b8ceebe572ba7f0559ab85196bc65626b69760692f`.
 
-Private project 1168582 has not been read or changed. After the user reported
-restoring access, the browser still denied `studio.edgeimpulse.com` because of
-a saved permission / managed policy. Roboflow browser access was also denied.
-Public research is complete within the five-dataset/three-model limit. See
-DATASET_SELECTION.md and MODEL_SELECTION.md. Two CC-BY-4.0 datasets are queued
-for audit; none is approved for training. Battery v12 has no held-out test split.
-No dataset, trained model, experiment, metric, or hardware result is inferred.
+At the earlier preparation milestone, browser policy blocked project and dataset
+access. That access blocker is resolved by the newer checkpoint above. Public
+research remains within five datasets/three models; two candidates were audited
+without approving either for training. No trained application model exists.
 
 Local implementation checkpoint: separate classification adapter; preserved and
 strengthened FOMO metadata checks; central fine-grained/reject taxonomy; whole-
 vector probability/margin rejection; physical model-validation gate off by default;
 request-specific stale-result handling; metadata/missing-artifact tests; offline
 COCO auditing/preparation and export checksum tools. Tests use synthetic fixtures
-and fake SDKs, not trained weights. Dataset acquisition, Studio import/training,
-real SDK component wiring, vector testing and on-device validation remain blocked.
+and fake SDKs, not trained weights. Acquisition is now complete. Studio import/training, real SDK component wiring
+and vector tests await accepted data and an actual trained export; on-device
+validation additionally requires a board.
 
 Latest local milestone: `npm test` passes nine native targets, metadata negative
 compile checks, absent-artifact CMake checks and three artifact-tool tests.
@@ -49,8 +96,8 @@ Component-size analysis (bytes, default build, no generated model):
 Full component output is retained in ignored `build/model-components.csv`.
 Locally retained ignored artifacts: `.venv/` (Pillow tooling), native test
 executables, IDF build outputs/logs/resource CSVs and prior audit backups under
-`build/`, existing `node_modules/`, and original root `sdkconfig`. No dataset or
-trained-model download was retained. Staged diff/credential/large-artifact checks
+`build/`, existing `node_modules/`, and original root `sdkconfig`. At that earlier milestone no dataset or
+trained-model download was retained; the newer checkpoint lists current artifacts. Staged diff/credential/large-artifact checks
 pass. The model work is a preparation milestone, not completed trained inference.
 
 ## Audit baseline — 2026-11-17
@@ -100,7 +147,7 @@ Build repairs were evidence-based: selected the configured IDF 6.0.2 environment
 | Area | Exact missing evidence / work |
 |---|---|
 | Software integration | Default and hardware-profile builds work locally. Actual exported EI SDK compatibility with IDF 6.0.2 cannot be checked until supplied; no firmware boot/network timing claims |
-| Model/data | Browser permissions for Roboflow and existing EI project 1168582; audited licensed images; trained classification (preferred baseline) or FOMO C++ export; exact input/labels/version/checksum, held-out metrics and ESP32 profile |
+| Model/data | Browser access works. Both audited sources fail acceptance; original rights-cleared plate images, reject cases and object/session identity are needed (DATA_COLLECTION.md). Then train in existing project 1168582, export and verify exact metadata/checksum, held-out metrics and ESP32 profile |
 | Hardware | No serial device; board condition after possible buck damage, sensor/flash/PSRAM identity, driver IC/Rs, motor phase ratings, VREF, boot-pin levels, cooling, and supply capacity unverified |
 | Sensors | No validated object/home/limit sensors. Manual trigger/reference only; VERIFY is a timed settle, not feedback |
 | Mechanical | Plate layout, gearing, microstep settings, reference marks, safe bin coordinates/path, release mechanism, load/holding behavior, repeatability and guarding |
