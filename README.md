@@ -2,7 +2,7 @@
 
 ESP32-CAM controller for a manually triggered, two-axis waste-sorting plate. Native ESP-IDF 6.0.2 + FreeRTOS; camera/JPEG preview, conservative three-category decisions, explicit state machine, and asynchronous RMT step generation.
 
-**Current status:** firmware builds and host tests run locally. Default inference and motors are simulated. No trained Edge Impulse export is present; no board was connected for flashing or physical validation. This is an open-loop prototype, not an unattended or hazardous-waste handling system. The [portfolio concept](https://www.brianteo.dev/) describes the intended product; this repository's status and evidence are authoritative.
+**Current status:** USB-only ESP32-CAM bring-up has verified flashing, PSRAM memory test, OV3660 initialization, mock inference, simulated motors and disarmed/unhomed startup. AP and HTTP server startup are reported by serial logs; client HTTP/JPEG verification and pilot collection still require the operator. No trained model or physical motor validation is present. This is a supervised open-loop prototype. The [portfolio concept](https://www.brianteo.dev/) describes the intended product; this repository's status and evidence are authoritative.
 
 ## Build on this Windows machine
 
@@ -75,6 +75,8 @@ Native tests compile the actual C/C++ modules with GCC/G++ (or CC/CXX overrides)
 | `PlatformIOfolder/`, `server/` | Historical Arduino and Node references; not production dependencies |
 
 Image classification is the selected next baseline for one centered item; FOMO remains a separate supported adapter. Neither has installed trained weights. Browser access to the existing Edge Impulse project works. Two Roboflow candidates were downloaded and audited; neither passed training acceptance. The battery boxes describe chemistry text, repeated objects cross splits, and the garbage source includes stock-watermarked images with unresolved upstream rights. Real empty-plate and unfamiliar-object examples are still needed. See the [audit](docs/DATASET_AUDIT.md) and [capture procedure](docs/DATA_COLLECTION.md).
+
+Collect full-frame JPEGs with `.venv\Scripts\python tools\data\capture.py`; it validates images, rejects duplicates and protects object/session splits and CSV writes. Run its offline tests with `.venv\Scripts\python tests\test_capture.py`. Read the collection procedure before choosing labels, IDs or splits; the capture computer must have a route to the board's AP.
 
 Real label routing is centralized in `components/fsm/waste_labels.def`; reject classes and ambiguous probabilities never default to a bin. Thresholds remain provisional and real-model physical motion is gated off.
 

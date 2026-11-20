@@ -1,6 +1,31 @@
 # Hardware bring-up and acceptance
 
-No serial device was available during this implementation. All steps below are **pending physical verification**. Use ordinary harmless test objects only.
+USB-only bring-up was observed on 2026-11-20 using CH340 on COM3 (this session's
+port, not a universal default). Flash writes verified automatically. The board
+reported ESP32-D0WD-V3 revision 3.1, 4 MB flash, 8 MB PSRAM with 4 MB mapped,
+PSRAM memory test OK, and OV3660 camera initialization `ESP_OK`. A bounded
+25-second boot observation showed no brownout, watchdog or repeated reset.
+Two startup `NO-SOI` JPEG-marker warnings remain recorded; actual `/capture`
+decoding has not yet been verified. Do not change pins or sensor settings solely
+because of the earlier OV3640 probe mismatch before OV3660 detection.
+
+Serial confirms mock inference, simulated motors, unhomed/disarmed/unreferenced
+state, AP startup and HTTP listeners on 80/81. Network association, client HTTP
+and JPEG success are still pending user confirmation. All external wiring,
+drivers, motors, VMOT, buck and 12 V supply remain disconnected per the user.
+Do not proceed to the motor steps below during this camera-only stage.
+
+Next: read the generated AP password locally in `tools\idf.cmd -p COM3 monitor`
+(115200 baud, exit with Ctrl+]). Connect a phone to `ESP32-CAM-MB`, retain the
+connection despite its lack of internet, and inspect `/`, `/api/status`, then
+`http://192.168.4.1/capture`. Report modes, state and whether a current image
+appears; do not send the password or page HTML. Do not press Arm, Confirm zero or
+Capture and sort. The snapshot endpoint needs no motion command. Optional preview
+uses port 81; close it for collection. Keep the development computer's internet
+connection until a separate, explicit network handoff for host capture.
+
+The remaining acceptance steps are **pending unless recorded above or in
+PROJECT_STATUS.md**. Use ordinary harmless test objects only.
 
 1. Disconnect motors and VMOT. Inspect the possibly damaged ESP32-CAM and buck. Measure buck output at 5.0 V with correct polarity before connecting it. Check the board's flash/PSRAM capacity and actual sensor (history says OV3660; older README said OV2640).
 2. Use the MB/USB interface alone for logic power. Run `tools\idf.cmd -p COMx flash monitor` with the observed port, GPIO0 low for upload and released for reset as the adapter requires. Firmware is in `build/sorter/`, not the old root build output. Never select a guessed COM port.

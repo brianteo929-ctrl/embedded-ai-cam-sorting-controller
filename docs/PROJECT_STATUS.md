@@ -1,5 +1,72 @@
 # Project status
 
+## USB camera bring-up checkpoint - 2026-11-20
+
+Started from clean `main` and matching `origin/main` at
+`1bb36480ff0a6b836aecd222221bbe11a00b3e2f`. Windows PnP identified
+USB-SERIAL CH340 (COM3); exclusive serial open succeeded. This is the observed
+port for this session only. The user reports ESP32-CAM seated in its MB programmer,
+USB power only, and no drivers, motors, VMOT, buck, external supply, radio, rain
+sensor or external GPIO wiring connected. No motion command was issued.
+
+Tool-observed results:
+
+- esptool 5.3.1 entered the bootloader automatically, identified ESP32-D0WD-V3
+  revision 3.1, 40 MHz crystal, 4 MB flash (manufacturer 0x5e / device 0x4016).
+  The baseline and subsequent logging-only diagnostic build flashed with all
+  written-region hashes verified and automatic RTS reset. No erase-all was used;
+  existing partition layout and root sdkconfig were preserved.
+- Boot: ESP-IDF 6.0.2, DIO flash at 40 MHz, reset code 0x1 POWERON_RESET after
+  intentional reset. Two bounded 25-second observations showed no brownout,
+  watchdog or boot loop. This is a short boot check, not a soak test.
+- PSRAM: 8 MB detected at 40 MHz, 4 MB mapped into the heap; memory test OK.
+  The virtual-address warning explicitly reports the mapping limit. Runtime CPU
+  is **160 MHz**, unlike the earlier EI target's 240 MHz profile; future model
+  latency comparisons must account for this. No frequency setting was changed.
+- Camera: PID 0x3660, detected OV3660 at SCCB 0x3c, camera init `ESP_OK`,
+  15,360-byte PSRAM framebuffer allocated. Each observation logged two initial
+  `NO-SOI - JPEG start marker missing` warnings. No sensor/pin change was made.
+  QVGA JPEG is configured; actual JPEG dimensions/decoding await `/capture`.
+- Latest diagnostics: `state=unhomed armed=0 referenced=0 motors=simulated`,
+  `backend=mock model=simulation-no-model`. Motor GPIO configuration is compiled
+  out in this build; electrical waveforms were not measured.
+- AP/DHCP startup reported at 192.168.4.1; both HTTP servers reported ready on
+  ports 80/81. Initial free internal memory **128,523 bytes**, free PSRAM
+  **3,913,904 bytes**. These are observed boot snapshots, not peak-load margins.
+- Client association, HTTP status, JPEG decoding and framing: **pending user
+  verification**. No user-observed HTTP success has yet been reported.
+
+Flashed diagnostic artifact provenance: based on `1bb3648` plus the `main/main.c`
+and `main/web.c` boot-log additions in this milestone. The incremental build still
+reports app version `1bb3648`; that string alone does not identify the changed
+artifact. Binary SHA-256:
+`d83b1e7f064a02e2840b1aab1f30ab4c94cba7c3e83dadfe009fe8fd26a25c59`;
+ELF SHA-256:
+`4739c82cc3fa106a26783e226300915a6028601480cdcb0454181f43f0337c96`.
+Serial logs were redacted before writing to ignored `build/`; AP passwords and
+device MACs are not included in committed evidence.
+
+Capture workflow implemented in `tools/data/capture.py`: original JPEG validation,
+same-host port-81 redirect, bounded requests, exact deduplication, no-overwrite
+filenames, whole-object/session split checks, a collection lock and atomic CSV
+replacement. A real Windows sharing violation exposed during testing led to a
+maximum of three short rename attempts for Windows errors 32/33 only; persistent
+locks preserve the old CSV and require inspection. Fifteen focused offline tests
+pass, including a loopback HTTP server and interruption before/after replacement.
+
+Milestone regressions: `npm test` and six dataset tests pass. Default incremental
+build/size/component analysis: **892,368 bytes**, **643,632 bytes / 42% free**;
+IRAM 93,635 and static DRAM 51,059 bytes. Hardware-profile compilation (never
+flashed) passes at **799,152 bytes**, **736,848 bytes / 48% free**. No motor/model
+authorization gate, GPIO assignment, partition or root sdkconfig change occurred.
+
+Pilot: **0 images**, no captures directory at stage start. Proposed `session01`
+training-only pilot and operator commands are in DATA_COLLECTION.md. First
+external action is phone association and HTTP/JPEG verification using the locally
+displayed per-boot password. The development computer's network is unchanged.
+Original data collection and EI training remain gated on this pilot; no model
+accuracy, on-device inference or physical motor behavior is claimed.
+
 ## Dataset audit checkpoint - 2026-11-19
 
 Browser access and GitHub sign-in work. Existing private Edge Impulse project
@@ -148,7 +215,7 @@ Build repairs were evidence-based: selected the configured IDF 6.0.2 environment
 |---|---|
 | Software integration | Default and hardware-profile builds work locally. Actual exported EI SDK compatibility with IDF 6.0.2 cannot be checked until supplied; no firmware boot/network timing claims |
 | Model/data | Browser access works. Both audited sources fail acceptance; original rights-cleared plate images, reject cases and object/session identity are needed (DATA_COLLECTION.md). Then train in existing project 1168582, export and verify exact metadata/checksum, held-out metrics and ESP32 profile |
-| Hardware | No serial device; board condition after possible buck damage, sensor/flash/PSRAM identity, driver IC/Rs, motor phase ratings, VREF, boot-pin levels, cooling, and supply capacity unverified |
+| Hardware | USB/COM3 flashing, OV3660 initialization and PSRAM boot test now observed above. Client HTTP/JPEG verification pending. Driver IC/Rs, motor phase ratings, VREF, boot-pin levels, cooling and external supply remain unverified; no external motor wiring connected |
 | Sensors | No validated object/home/limit sensors. Manual trigger/reference only; VERIFY is a timed settle, not feedback |
 | Mechanical | Plate layout, gearing, microstep settings, reference marks, safe bin coordinates/path, release mechanism, load/holding behavior, repeatability and guarding |
 

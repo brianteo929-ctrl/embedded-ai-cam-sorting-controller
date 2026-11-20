@@ -219,6 +219,7 @@ esp_err_t web_start(void)
     if ((err = httpd_register_uri_handler(preview, &route)) != ESP_OK) goto failed;
     route = (httpd_uri_t){.uri = "/capture", .method = HTTP_GET, .handler = capture};
     if ((err = httpd_register_uri_handler(preview, &route)) != ESP_OK) goto failed;
+    ESP_LOGI(TAG, "HTTP ready: controls=:80 images=:81; /capture redirects to image server");
     return ESP_OK;
 failed:
     if (preview) httpd_stop(preview);
